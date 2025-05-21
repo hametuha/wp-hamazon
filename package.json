@@ -34,7 +34,7 @@
 		"@babel/plugin-transform-react-jsx": "^7.0.0",
 		"@babel/preset-env": "^7.5.4",
 		"@kunoichi/grab-deps": "^1.0.0",
-		"@wordpress/browserslist-config": "5.31",
+		"@wordpress/browserslist-config": "6.23",
 		"@wordpress/eslint-plugin": "^17.5.0",
 		"babel-eslint": "^10.0.1",
 		"babel-loader": "^8.0.5",
