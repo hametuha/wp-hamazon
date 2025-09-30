@@ -238,7 +238,7 @@ abstract class AbstractService extends Singleton {
 				'method'              => 'GET',
 				'callback'            => array( $this, 'handle_rest_request' ),
 				'args'                => $this->get_rest_arguments(),
-				'permission_callback' => null,
+				'permission_callback' => '__return_true',
 			) );
 		}
 	}
