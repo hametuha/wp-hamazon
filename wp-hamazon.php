@@ -6,7 +6,8 @@
  * Author: Fumiki Takahashi
  * Author URI: https://takahashifumiki.com
  * Version: 5.1.3
- * PHP Version: 7.2
+ * Requires at least: 5.6
+ * Requires PHP: 7.2
  * Text Domain: hamazon
  * Domain Path: /languages/
  * License: GPL3 or Later
