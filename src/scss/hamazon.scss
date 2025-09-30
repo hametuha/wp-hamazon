@@ -10,6 +10,17 @@
 ----------------------------------------------
 */
 .tmkm-amazon {
+
+	&-vendor {
+		clear: both;
+		font-size: 0.85em;
+		text-align: right;
+
+		a {
+			color: #999;
+		}
+	}
+
 	&-view {
 		clear: both;
 		margin: 3em auto;
@@ -19,6 +30,7 @@
 		font-size: 1rem;
 
 		p a {
+
 			&:link, &:visited {
 				text-decoration: none;
 			}
@@ -39,14 +51,14 @@
 	&-label {
 		display: inline-block;
 		width: 8em;
-		font-weight: bold;
+		font-weight: 700;
 		flex-shrink: 0;
 	}
 
 	&-title {
 		font-size: 1.2em;
 		line-height: 1.2;
-		font-weight: bold;
+		font-weight: 700;
 	}
 
 	&-category {
@@ -58,8 +70,6 @@
 		text-decoration: none;
 		padding: 2px 5px;
 	}
-
-	&-img{}
 
 	&-image {
 		float: right;
@@ -76,7 +86,7 @@
 	p {
 
 		em {
-			font-weight: bold;
+			font-weight: 700;
 		}
 
 		&.description {
@@ -88,16 +98,6 @@
 			font-size: 1em;
 			line-height: 1.4;
 			margin: 1em 0;
-		}
-	}
-
-	&-vendor {
-		clear: both;
-		font-size: 0.85em;
-		text-align: right;
-
-		a {
-			color: #999;
 		}
 	}
 
@@ -113,7 +113,7 @@
 		border-radius: 3px;
 		text-decoration: none !important;
 		font-size: 1.2em;
-		font-weight: bold;
+		font-weight: 700;
 		transition: color .3s ease-in-out, background-color .3s ease-in-out, border-color .3s ease-in-out;
 
 		& + & {
@@ -142,11 +142,13 @@
 
 
 	@media only screen and ( max-width: 767px ) {
+
 		&-image {
 			float: none;
 			display: block;
 			margin: 2em auto;
 		}
+
 		&-actions {
 			text-align: center;
 			clear: both;
@@ -156,12 +158,9 @@
 			display: block;
 			text-align: center;
 		}
+
 		&-vendor {
 			text-align: center;
 		}
 	}
-}
-
-.hamazon-block-no-content {
-
 }

@@ -3,13 +3,13 @@
  */
 
 @import "components/no_content";
+@import "hamazon";
 
 .hamazon-block{
 
   &-content{
     min-height: 200px;
     position: relative;
-    @import "hamazon";
   }
 
   &-backdrop{
@@ -21,6 +21,7 @@
     left: 0;
     z-index: 10;
     background-color: rgba( 0, 0, 0, 0 );
+
     &:hover{
       background-color: rgba( 0, 0, 0, .6 );
     }
@@ -43,6 +44,7 @@
     padding: 0.5em 1em;
     color: #fff;
     background-color: transparent;
+
     &:hover{
       border-color: #fff;
       background-color: #fff;
