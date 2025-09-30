@@ -1,0 +1,122 @@
+name: WordPress Plugin Workflow
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - '*'
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        php: [ '7.4', '8.1', '8.2', '8.3' ] # PHP versions to check.
+        wp: [ 'latest', '6.1' ]             # WordPress version to check.
+    uses: tarosky/workflows/.github/workflows/wp-unit-test.yml@main
+    with:
+      php_version: ${{ matrix.php }}
+      wp_version: ${{ matrix.wp }}
+
+  lint:
+    name: PHP Syntax Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Setup PHP with composer v2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+          tools: composer
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install dependencies
+        run: composer install --no-progress
+
+      - name: PHP Syntax Check
+        run: composer lint
+
+  assets:
+    name: Test Assets
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Install NPM
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install NPM Dependencies
+        run: npm install
+
+      - name: Lint Assets
+        run: npm run gulp eslint
+
+  status:
+    name: Status Check
+    needs: [ test, lint, assets ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Status OK
+        run: echo "OK"
+
+  release:
+    name: Deploy WordPress Plugin
+    needs: status
+    if: contains(github.ref, 'tags/') && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Setup PHP with composer v2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+          tools: composer
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install NPM
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Build package.
+        run: bash bin/build.sh ${{ github.ref }}
+
+      - name: Deploy to WordPress Directory
+        id: deploy
+        uses: 10up/action-wordpress-plugin-deploy@stable
+        with:
+          generate-zip: true
+        env:
+          SLUG: wp-hamazon
+          SVN_USERNAME: ${{ secrets.WPORG_FUMIKI_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.WPORG_FUMIKI_PASSWORD }}
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ github.workspace }}/wp-hamazon.zip
+          asset_name: wp-hamazon.zip
+          asset_content_type: application/zip
