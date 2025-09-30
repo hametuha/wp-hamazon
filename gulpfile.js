@@ -28,20 +28,6 @@ gulp.task('scss', function () {
         .pipe(gulp.dest('assets/css'));
 });
 
-// Stylelint
-gulp.task('stylelint', function (done) {
-    return gulp.src('./src/scss/**/*.scss')
-        .pipe($.stylelint({
-            failAfterError: false,
-            reporters: [
-                {
-                    formatter: 'string',
-                    console: true,
-                },
-            ],
-        }));
-});
-
 // eslint
 gulp.task('eslint', function () {
     return gulp.src([
@@ -114,4 +100,4 @@ gulp.task('default', gulp.task('watch'));
 gulp.task('build', gulp.series(gulp.parallel('js:bundle', 'scss', 'imagemin'), 'dump'));
 
 // Lint tasks.
-gulp.task('lint', gulp.parallel('stylelint', 'eslint'));
+gulp.task('lint', gulp.task('eslint'));

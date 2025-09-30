@@ -37,6 +37,11 @@ These services below are deprecated.
 
 ##  Changelog
 
+### 5.1.4
+
+* Fix bug on classic editor.
+* Avoid translation error warning.
+
 ### 5.1.3
 
 * Fix fatal error on deploy script.
