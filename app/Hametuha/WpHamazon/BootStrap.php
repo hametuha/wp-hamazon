@@ -34,7 +34,7 @@ class BootStrap extends Singleton {
 		// Register general setting
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 		// Register assets
-		add_action( 'init', array( $this, 'register_assets' ) );
+		add_action( 'init', array( $this, 'register_assets' ), 20 );
 		// Add Action links on plugin lists.
 		add_filter( 'plugin_action_links', array( $this, 'plugin_page_link' ), 500, 2 );
 		// Load public CSS
@@ -181,8 +181,15 @@ class BootStrap extends Singleton {
 	 * Register assets
 	 */
 	public function register_assets() {
-
-		foreach ( json_decode( file_get_contents( hamazon_root_dir() . '/wp-dependencies.json' ), true ) as $setting ) {
+		$file = hamazon_root_dir() . '/wp-dependencies.json';
+		if ( ! file_exists( $file ) ) {
+			return;
+		}
+		$json = json_decode( file_get_contents( $file ), true );
+		foreach ( $json as $setting ) {
+			if ( empty( $setting['path'] ) ) {
+				continue;
+			}
 			$path    = hamazon_root_dir() . '/' . $setting['path'];
 			$version = file_exists( $path ) ? filemtime( $path ) : hamazon_info( 'version' );
 			$url     = plugins_url( '', $path ) . '/' . basename( $path );
@@ -351,6 +358,10 @@ class BootStrap extends Singleton {
 
 		if ( is_admin() && get_current_screen() && get_current_screen()->post_type && 'content' === $editor_id ) {
 			$post_types = get_option( 'hamazon_post_types', array( 'post' ) );
+			// Ensure $post_types is an array
+			if ( ! is_array( $post_types ) ) {
+				$post_types = array( 'post' );
+			}
 			if ( ! in_array( get_current_screen()->post_type, $post_types, true ) ) {
 				return;
 			}
