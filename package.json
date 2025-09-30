@@ -8,7 +8,12 @@
 	},
 	"scripts": {
 		"test": "jest",
-		"start": "gulp build && gulp watch",
+		"start": "wp-env start",
+		"update": "wp-env start --update",
+		"stop": "wp-env stop",
+		"env": "wp-env",
+		"cli": "wp-env run cli wp",
+		"cli:test": "wp-env run tests-cli wp",
 		"package": "gulp build",
 		"watch": "gulp watch",
 		"gulp": "gulp",
@@ -35,6 +40,7 @@
 		"@babel/preset-env": "^7.5.4",
 		"@kunoichi/grab-deps": "^1.0.0",
 		"@wordpress/browserslist-config": "5.31",
+		"@wordpress/env": "^10.31.0",
 		"@wordpress/eslint-plugin": "^17.5.0",
 		"babel-eslint": "^10.0.1",
 		"babel-loader": "^8.0.5",
@@ -62,5 +68,11 @@
 	},
 	"jest": {
 		"browser": true
+	},
+	"engines": {
+		"node": "18.20.8"
+	},
+	"volta": {
+		"node": "18.20.8"
 	}
 }

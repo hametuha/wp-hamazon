@@ -2,10 +2,8 @@
 
 Contributors: Takahashi_Fumiki, hametuha
 Tags: amazon, affiliate, dmm, phg
-Requires at least: 5.6
-Tested up to: 6.8
-Requires PHP: 7.4
-Stable tag: 5.1.3  
+Tested up to: 6.8  
+Stable Tag: nightly  
 
 You can add affiliate link in post content via Amazon, iTunes, DMM.
 

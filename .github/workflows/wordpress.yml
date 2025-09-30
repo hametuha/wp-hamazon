@@ -9,6 +9,9 @@ jobs:
   deploy:
     name: Deploy to WordPress.org
     runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://wordpress.org/plugins/wp-hamazon/
     steps:
       - uses: actions/checkout@v4
 

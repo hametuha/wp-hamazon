@@ -54,7 +54,7 @@ abstract class AbstractService extends Singleton {
 			}
 			return $data;
 		}, 1, 2 );
-		add_action( 'init', array( $this, 'short_code_set_up' ) );
+		add_action( 'init', array( $this, 'short_code_set_up' ), 12 );
 	}
 
 	/**
