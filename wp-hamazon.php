@@ -43,8 +43,6 @@ function hamazon_info( $key ) {
  * @since 2.0.0
  */
 function hamazon_init() {
-	// Load translations.
-	load_plugin_textdomain( 'hamazon', false, basename( __DIR__ ) . '/languages' );
 	// Check PHP version
 	if ( version_compare( phpversion(), hamazon_info( 'php' ), '<' ) ) {
 		add_action( 'admin_notices', 'hamazon_warnings' );
@@ -52,6 +50,19 @@ function hamazon_init() {
 	}
 	// Load global functions
 	require_once __DIR__ . '/functions.php';
+	// Bootstrap at init action to ensure translations are loaded.
+	add_action( 'init', 'hamazon_bootstrap' );
+}
+
+/**
+ * Bootstrap plugin
+ *
+ * @package hamazon
+ * @since 5.1.4
+ */
+function hamazon_bootstrap() {
+	// Load translations.
+	load_plugin_textdomain( 'hamazon', false, basename( dirname( __FILE__ ) ) . '/languages' );
 	// Bootstrap
 	require_once __DIR__ . '/vendor/autoload.php';
 	Hametuha\WpHamazon\BootStrap::get_instance();
