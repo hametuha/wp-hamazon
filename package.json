@@ -15,6 +15,7 @@
 		"env": "wp-env",
 		"cli": "wp-env run cli wp",
 		"cli:test": "wp-env run tests-cli wp",
+		"debug": "wp-env logs development | grep -v ' 200 '",
 		"package": "gulp build",
 		"watch": "gulp watch",
 		"gulp": "gulp",
