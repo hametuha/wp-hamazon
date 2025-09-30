@@ -41,6 +41,8 @@ jobs:
 
   phplint:
     uses: tarosky/workflows/.github/workflows/phplint.yml@main
+    with:
+      install_command: "composer install && php bin/replacer.php"
 
   assets:
     name: Test Assets
