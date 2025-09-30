@@ -5,7 +5,7 @@
  * Description: An affiliate plugin specialized for amazon. Forked from tmkm-amazon.
  * Author: Fumiki Takahashi
  * Author URI: https://takahashifumiki.com
- * Version: 5.1.3
+ * Version: nightly
  * Requires at least: 5.6
  * Requires PHP: 7.4
  * Text Domain: hamazon
@@ -63,7 +63,7 @@ function hamazon_init() {
  */
 function hamazon_bootstrap() {
 	// Load translations.
-	load_plugin_textdomain( 'hamazon', false, basename( dirname( __FILE__ ) ) . '/languages' );
+	load_plugin_textdomain( 'hamazon', false, basename( __DIR__ ) . '/languages' );
 	// Bootstrap
 	require_once __DIR__ . '/vendor/autoload.php';
 	Hametuha\WpHamazon\BootStrap::get_instance();
