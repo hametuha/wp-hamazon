@@ -9,28 +9,35 @@
 
 .result-desc{
 	padding: 10px 20px;
+
 	.wp-hamazon-pagination{
 		text-align: right;
+
 		span, a{
 			padding: 2px 3px;
 			margin: 0 1px;
 			border: 1px solid #ccc;
 			background-color: #f9f9f9;
 		}
+
 		span{
 			color: #aaa;
 		}
+
 		a{
+
 			&:link,
 			&:visited{
 				color: #21759b;
 				text-decoration: none;
 			}
+
 			&:hover{
-				color: orange;
+				color: #ffa500;
 			}
+
 			&:active{
-				color: red;
+				color: #f00;
 			}
 		}
 	}
@@ -38,30 +45,38 @@
 
 .wp-hamazon-product-table{
 	width: 100%;
-	border-collpse: collapse;
-	tr:first-child{
-		th, td{
-			border-top: 1px solid #ddd;
-		}
-	}
+	border-collapse: collapse;
+
 	th, td{
 		padding: 10px;
 		border-bottom: 1px solid #ddd;
 	}
+
 	th{
 		text-align: center;
+
 		img{
 			margin-bottom: 10px;
 			max-width: 80px;
 			height: auto;
 		}
 	}
+
 	td{
+
 		em{
-			color: orange;
+			color: #ffa500;
 		}
+
 		textarea{
 			width: 90%;
+		}
+	}
+
+	tr:first-child{
+
+		th, td{
+			border-top: 1px solid #ddd;
 		}
 	}
 }
@@ -75,11 +90,14 @@
 }
 
 .search-dmm{
+
     select{
         max-width: 150px;
     }
-    select[name^=floor]{
+
+    select[name^="floor"]{
         display: none;
+
         &.active{
             display: inline;
         }

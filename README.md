@@ -1,11 +1,9 @@
 # Hamazon
 
-Contributors: Takahashi_Fumiki, hametuha  
-Tags: amazon, affiliate, dmm, phg  
-Requires at least: 5.6  
-Tested up to: 6.4  
-Requires PHP: 7.2  
-Stable tag: 5.1.3  
+Contributors: Takahashi_Fumiki, hametuha
+Tags: amazon, affiliate, dmm, phg
+Tested up to: 6.8  
+Stable Tag: nightly  
 
 You can add affiliate link in post content via Amazon, iTunes, DMM.
 
@@ -38,6 +36,11 @@ These services below are deprecated.
 1. You can search affiliate like this screen.
 
 ##  Changelog
+
+### 5.1.4
+
+* Fix bug on classic editor.
+* Avoid translation error warning.
 
 ### 5.1.3
 

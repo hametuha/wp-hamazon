@@ -17,7 +17,8 @@ class BlockEditor extends Singleton {
 	 * Constructor
 	 */
 	public function __construct() {
-		add_action( 'init', array( $this, 'register_blocks' ) );
+		// Register blocks after assets are registered (priority 20)
+		add_action( 'init', array( $this, 'register_blocks' ), 30 );
 	}
 
 	/**

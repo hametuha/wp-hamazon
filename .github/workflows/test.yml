@@ -1,0 +1,73 @@
+name: WordPress Plugin Workflow
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        php: [ '7.4', '8.1', '8.2', '8.3' ] # PHP versions to check.
+        wp: [ 'latest', '6.1' ]             # WordPress version to check.
+    uses: tarosky/workflows/.github/workflows/wp-unit-test.yml@main
+    with:
+      php_version: ${{ matrix.php }}
+      wp_version: ${{ matrix.wp }}
+
+  lint:
+    name: PHP Syntax Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Setup PHP with composer v2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+          tools: composer
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install dependencies
+        run: composer install --no-progress
+
+      - name: PHP Syntax Check
+        run: composer lint
+
+  phplint:
+    uses: tarosky/workflows/.github/workflows/phplint.yml@main
+    with:
+      install_command: "composer install --no-dev && php bin/replacer.php"
+
+  assets:
+    name: Test Assets
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Install NPM
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install NPM Dependencies
+        run: npm install
+
+      - name: Lint JS
+        run: npm run gulp eslint
+
+      - name: Lint CSS
+        run: npm run lint:css
+
+  status:
+    name: Status Check
+    needs: [ test, lint, phplint, assets ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Status OK
+        run: echo "OK"

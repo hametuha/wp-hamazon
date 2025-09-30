@@ -1,0 +1,7 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Run linters
+npm run lint:css
+npm run gulp eslint
+composer lint

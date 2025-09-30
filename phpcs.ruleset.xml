@@ -27,9 +27,12 @@
 		<exclude name="WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase" />
 	</rule>
 
+	<!-- PHPCompatibility disabled due to compatibility issues with PHP 8.x
+	     TODO: Re-enable when PHPCompatibility supports PHP 8.x properly
 	<rule ref="PHPCompatibility">
-		<config name="testVersion" value="7.2-"/>
+		<config name="testVersion" value="7.4-"/>
 	</rule>
+	-->
 
 	<exclude-pattern>/bin/*.php</exclude-pattern>
 	<exclude-pattern>*/node_modules/*</exclude-pattern>

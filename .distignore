@@ -13,3 +13,6 @@ webpack.config.js
 bin/
 tests/
 .wordpress-org/
+src/
+readme.txt.bak
+wp-hamazon.php.bak

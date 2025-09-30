@@ -179,9 +179,13 @@ class Dmm extends AbstractService {
 		}
 		$site = $request['site'];
 		$site = 'DMM.R18' === $request['site'] ? $request['site'] : 'DMM.com';
+		// Check if items exist and is an array
+		$items = isset( $search_result->result->items ) && is_array( $search_result->result->items )
+			? $search_result->result->items
+			: array();
 		return new \WP_REST_Response( array(
-			'total_page'   => ceil( $search_result->result->total_count / $this->per_page ),
-			'total_result' => (int) $search_result->result->total_count,
+			'total_page'   => isset( $search_result->result->total_count ) ? ceil( $search_result->result->total_count / $this->per_page ) : 0,
+			'total_result' => isset( $search_result->result->total_count ) ? (int) $search_result->result->total_count : 0,
 			'items'        => array_map( function ( $item ) use ( $site ) {
 				return array(
 					'title'      => $item->title,
@@ -195,7 +199,7 @@ class Dmm extends AbstractService {
 					'image'      => isset( $item->imageURL->small ) ? $item->imageURL->small : hamazon_no_image(),
 					'url'        => $item->affiliateURL,
 				);
-			}, $search_result->result->items ),
+			}, $items ),
 		) );
 	}
 
