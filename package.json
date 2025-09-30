@@ -19,8 +19,10 @@
 		"gulp": "gulp",
 		"fix:js": "eslint --fix --ext .js,.jsx -c .eslintrc src/js",
 		"fix:css": "stylelint --fix src/scss",
+		"lint:css": "stylelint --fix src/scss",
 		"jed": "po2json languages/hamazon-$LOCALE.po languages/hamazon-$LOCALE-hamazon-i18n.json -f jed",
-		"jed-ja": "po2json languages/hamazon-ja.po languages/hamazon-ja-hamazon-i18n.json -f jed"
+		"jed-ja": "po2json languages/hamazon-ja.po languages/hamazon-ja-hamazon-i18n.json -f jed",
+		"prepare": "husky"
 	},
 	"repository": {
 		"type": "git",
@@ -42,6 +44,7 @@
 		"@wordpress/browserslist-config": "5.31",
 		"@wordpress/env": "^10.31.0",
 		"@wordpress/eslint-plugin": "^17.5.0",
+		"@wordpress/stylelint-config": "^23.23.0",
 		"babel-eslint": "^10.0.1",
 		"babel-loader": "^8.0.5",
 		"classnames": "^2.2.6",
@@ -56,10 +59,11 @@
 		"gulp-sass": "^5.1.0",
 		"gulp-sass-glob": "^1.0.9",
 		"gulp-sourcemaps": "^3.0.0",
-		"gulp-stylelint": "^13.0.0",
+		"husky": "^9.1.7",
 		"imagemin-mozjpeg": "9.0",
 		"imagemin-pngquant": "9.0",
 		"jest": "^29.7.0",
+		"lint-staged": "^16.2.3",
 		"po2json": "^1.0.0-alpha",
 		"sass": "^1.69.5",
 		"vinyl-named": "^1.1.0",
