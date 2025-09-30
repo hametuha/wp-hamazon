@@ -7,7 +7,7 @@
  * Author URI: https://takahashifumiki.com
  * Version: 5.1.3
  * Requires at least: 5.6
- * Requires PHP: 7.2
+ * Requires PHP: 7.4
  * Text Domain: hamazon
  * Domain Path: /languages/
  * License: GPL3 or Later
@@ -31,7 +31,7 @@ function hamazon_info( $key ) {
 	if ( is_null( $version ) ) {
 		$version = get_file_data( __FILE__, array(
 			'version' => 'Version',
-			'php'     => 'PHP Version',
+			'php'     => 'Requires PHP',
 		) );
 	}
 	return isset( $version[ $key ] ) ? $version[ $key ] : null;

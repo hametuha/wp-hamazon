@@ -16,7 +16,7 @@
   },
   "minimum-stability": "stable",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.4",
     "thewirecutter/paapi5-php-sdk": "^1.0"
   },
   "require-dev": {
