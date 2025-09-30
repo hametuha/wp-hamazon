@@ -204,6 +204,13 @@ class BootStrap extends Singleton {
 			'url'      => hamazon_asset_url( '' ),
 			'services' => $this->service_data_for_script(),
 		) );
+		// Localize for Classic Editor
+		wp_localize_script( 'hamazon-editor', 'HamazonEditor', array(
+			'icon'     => hamazon_asset_url( 'img/button.svg' ),
+			'btnLabel' => __( 'Affiliate', 'hamazon' ),
+			'title'    => __( 'Affiliate Search', 'hamazon' ),
+			'services' => $this->service_data_for_script(),
+		) );
 	}
 
 	/**
