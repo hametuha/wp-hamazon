@@ -51,7 +51,7 @@
 		"babel-loader": "^8.0.5",
 		"classnames": "^2.2.6",
 		"gulp": "^4.0.0",
-		"gulp-autoprefixer": "^8.0.0",
+		"gulp-autoprefixer": "^10.0.0",
 		"gulp-eslint": "^6.0.0",
 		"gulp-imagemin": "^8.0.0",
 		"gulp-load-plugins": "^2.0.0",
