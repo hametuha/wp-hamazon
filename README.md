@@ -1,9 +1,11 @@
 # Hamazon
 
-Contributors: Takahashi_Fumiki, hametuha
-Tags: amazon, affiliate, dmm, phg
+Contributors: Takahashi_Fumiki, hametuha  
+Tags: amazon, affiliate, dmm, phg  
 Tested up to: 6.8  
 Stable Tag: nightly  
+License: GPL v2 or later  
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 You can add affiliate link in post content via Amazon, iTunes, DMM.
 
