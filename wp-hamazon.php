@@ -11,7 +11,8 @@
  * Text Domain: hamazon
  * Domain Path: /languages/
  * License: GPL3 or Later
-*/
+ * License URI: https://www.gnu.org/licenses/gpl-3.0.html
+ */
 
 // Do not load directly
 defined( 'ABSPATH' ) || die();
