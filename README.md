@@ -4,7 +4,7 @@ Contributors: Takahashi_Fumiki, hametuha
 Tags: amazon, affiliate, dmm, phg  
 Tested up to: 6.8  
 Stable Tag: nightly  
-License: GPL3 or Later  
+License: GPLv3 or later  
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 You can add affiliate link in post content via Amazon, iTunes, DMM.

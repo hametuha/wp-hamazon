@@ -10,7 +10,7 @@
  * Requires PHP: 7.4
  * Text Domain: hamazon
  * Domain Path: /languages/
- * License: GPL3 or Later
+ * License: GPLv3 or later
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  */
 
