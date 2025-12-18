@@ -3,8 +3,8 @@
  * Plugin Name: Hamazon
  * Plugin URI: https://wordpress.org/plugins/wp-hamazon/
  * Description: An affiliate plugin specialized for amazon. Forked from tmkm-amazon.
- * Author: Fumiki Takahashi
- * Author URI: https://takahashifumiki.com
+ * Author: Hametuha
+ * Author URI: https://hametuha.co.jp
  * Version: nightly
  * Requires at least: 5.6
  * Requires PHP: 7.4

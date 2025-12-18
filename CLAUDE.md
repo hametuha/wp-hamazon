@@ -10,9 +10,9 @@ WordPress.orgで公開されているアフィリエイトプラグイン。Amaz
 
 ## 技術スタック
 
-- **PHP**: 7.4以上（Composer管理）
-- **Node.js**: 18.20.8（volta管理）
-- **WordPress**: 5.6以上（現在6.8までテスト済み）
+- **PHP**: Composerにバージョンを記載
+- **Node.js**: package.jsonに記載
+- **WordPress**: 最小バージョンはwp-hamazon.phpに、最大バージョンはREADEM.mdのTested up toを参照
 - **開発環境**: wp-env（Docker Desktop for MacOS）
 
 ## ディレクトリ構造
@@ -54,6 +54,8 @@ npm run cli -- [command]
 # テスト環境でWP-CLI実行
 npm run cli:test -- [command]
 ```
+
+ローカル環境は http://localhost:8888 で立ち上がります。ユーザー名/パスワードは `admin/password`です。
 
 ### ビルド・監視
 

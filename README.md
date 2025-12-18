@@ -39,6 +39,10 @@ These services below are deprecated.
 
 ##  Changelog
 
+### 5.2.0
+
+* Add fallback if you can't satisfy Amazon's Product Advertising API requirements.
+
 ### 5.1.4
 
 * Fix bug on classic editor.

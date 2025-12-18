@@ -213,7 +213,8 @@ class AmazonLocales {
 		$url    = sprintf( 'https://www.amazon.%s/dp/%s', $domain, $asin );
 		if ( $partner_tag ) {
 			$url = add_query_arg( [
-				'ref' => 'nosim',
+				'ref' => 'nosim
+				',
 				'tag' => $partner_tag,
 			], $url );
 		}
