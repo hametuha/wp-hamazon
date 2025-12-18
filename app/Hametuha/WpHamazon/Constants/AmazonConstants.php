@@ -325,7 +325,8 @@ class AmazonConstants extends StaticPattern {
 			if ( false !== $cache ) {
 				$item = $cache;
 			} else {
-				$item = self::get_item_by_asin( $asin );
+				// Pass false to get WP_Error on failure, so we can handle fallback ourselves.
+				$item = self::get_item_by_asin( $asin, false );
 			}
 
 			$is_fallback = false;
