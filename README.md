@@ -4,7 +4,7 @@ Contributors: Takahashi_Fumiki, hametuha
 Tags: amazon, affiliate, dmm, phg  
 Tested up to: 6.8  
 Stable Tag: nightly  
-License: GPL3 or Later  
+License: GPLv3 or later  
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 You can add affiliate link in post content via Amazon, iTunes, DMM.
@@ -38,6 +38,10 @@ These services below are deprecated.
 1. You can search affiliate like this screen.
 
 ##  Changelog
+
+### 5.2.0
+
+* Add fallback if you can't satisfy Amazon's Product Advertising API requirements.
 
 ### 5.1.4
 

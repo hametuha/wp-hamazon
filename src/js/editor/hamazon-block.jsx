@@ -12,8 +12,8 @@
 const React = wp.element;
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
-const { RichText } = wp.editor;
-const { SVG, Modal, Button } = wp.components;
+const { RichText, InspectorControls } = wp.editor;
+const { SVG, Modal, Button, PanelBody, TextControl, SelectControl } = wp.components;
 const { serverSideRender: ServerSideRender } = wp;
 const { withState } = wp.compose;
 
@@ -107,8 +107,36 @@ registerBlockType( 'hamazon/single', {
 			setAttributes( { content: newContent } );
 		}
 
+		// Build service options for SelectControl
+		const serviceOptions = [
+			{ value: '', label: __( 'Select service', 'hamazon' ) },
+			...services.map( ( service ) => ( {
+				value: service.key,
+				label: service.label,
+			} ) ),
+		];
+
 		return (
 			<div className="hamazon-block">
+				<InspectorControls>
+					<PanelBody title={ __( 'Direct Input', 'hamazon' ) } initialOpen={ true }>
+						<p className="components-base-control__help">
+							{ __( 'Enter ASIN or product ID directly without searching.', 'hamazon' ) }
+						</p>
+						<SelectControl
+							label={ __( 'Service', 'hamazon' ) }
+							value={ attributes.type || '' }
+							options={ serviceOptions }
+							onChange={ ( value ) => setAttributes( { type: value } ) }
+						/>
+						<TextControl
+							label={ __( 'Product ID (ASIN)', 'hamazon' ) }
+							value={ attributes.id || '' }
+							onChange={ ( value ) => setAttributes( { id: value } ) }
+							placeholder="B00XXXXXX"
+						/>
+					</PanelBody>
+				</InspectorControls>
 				<div className="hamazon-block-content">
 					<ServerSideRender
 						block="hamazon/single"
