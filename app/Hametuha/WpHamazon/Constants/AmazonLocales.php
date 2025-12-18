@@ -185,4 +185,38 @@ class AmazonLocales {
 		}
 		return $value;
 	}
+
+	/**
+	 * Get product page URL domain for a locale.
+	 *
+	 * @param string $locale Locale code (e.g., 'JP', 'US').
+	 * @return string Domain for product page (e.g., 'co.jp', 'com').
+	 */
+	public static function get_product_domain( $locale ) {
+		$locales = self::get_locales();
+		if ( ! isset( $locales[ $locale ] ) || ! isset( $locales[ $locale ]['domain'] ) ) {
+			return 'com';
+		}
+		return $locales[ $locale ]['domain'];
+	}
+
+	/**
+	 * Generate Amazon product page URL from ASIN.
+	 *
+	 * @param string $asin        ASIN code.
+	 * @param string $locale      Locale code (e.g., 'JP', 'US').
+	 * @param string $partner_tag Associate tag.
+	 * @return string Product page URL.
+	 */
+	public static function get_product_url( $asin, $locale, $partner_tag = '' ) {
+		$domain = self::get_product_domain( $locale );
+		$url    = sprintf( 'https://www.amazon.%s/dp/%s', $domain, $asin );
+		if ( $partner_tag ) {
+			$url = add_query_arg( [
+				'ref' => 'nosim',
+				'tag' => $partner_tag,
+			], $url );
+		}
+		return $url;
+	}
 }

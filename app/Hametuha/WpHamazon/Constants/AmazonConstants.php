@@ -333,41 +333,132 @@ class AmazonConstants extends StaticPattern {
 				$item = self::get_item_by_asin( $asin );
 			}
 
+			$is_fallback = false;
 			if ( is_wp_error( $item ) ) {
-				return $item;
+				// API failed, use fallback.
+				$item        = self::get_fallback_item( $asin );
+				$is_fallback = true;
 			} else {
 				set_transient( $cache_key, $item, 60 * 60 * 24 );
-				$content = trim( $content );
-				if ( ! empty( $content ) ) {
-					$desc = sprintf( '<p class="additional-description">%s</p>', wp_kses_post( $content ) );
-				} else {
-					$desc = '';
-				}
-				$html = hamazon_template( 'amazon', 'single', array(
-					'item'       => $item,
-					'extra_atts' => $extra_atts,
-					'asin'       => $asin,
-					'desc'       => $desc,
-				) );
-
-				/**
-				 * wp_hamazon_amazon
-				 *
-				 * Filter output of amazon
-				 *
-				 * @since 5.0 Change $item attributes to array.
-				 * @param string $html
-				 * @param array $item
-				 * @param array $extra_atts
-				 * @param string $content
-				 *
-				 * @return string
-				 */
-				return apply_filters( 'wp_hamazon_amazon', $html, $item, $extra_atts, $content );
 			}
+
+			$content = trim( $content );
+			if ( ! empty( $content ) ) {
+				$desc = sprintf( '<p class="additional-description">%s</p>', wp_kses_post( $content ) );
+			} else {
+				$desc = '';
+			}
+
+			// Choose template based on whether this is a fallback.
+			$template = $is_fallback ? 'fallback' : 'single';
+			$html     = hamazon_template( 'amazon', $template, array(
+				'item'        => $item,
+				'extra_atts'  => $extra_atts,
+				'asin'        => $asin,
+				'desc'        => $desc,
+				'is_fallback' => $is_fallback,
+			) );
+
+			/**
+			 * wp_hamazon_amazon
+			 *
+			 * Filter output of amazon
+			 *
+			 * @since 5.0 Change $item attributes to array.
+			 * @param string $html
+			 * @param array $item
+			 * @param array $extra_atts
+			 * @param string $content
+			 *
+			 * @return string
+			 */
+			return apply_filters( 'wp_hamazon_amazon', $html, $item, $extra_atts, $content );
 		} catch ( \Exception $e ) {
 			return new \WP_Error( $e->getCode(), $e->getMessage() );
 		}
+	}
+
+	/**
+	 * Get fallback item data when API is unavailable.
+	 *
+	 * This method scrapes the Amazon product page to get the title
+	 * and caches the result using transients.
+	 *
+	 * @param string $asin ASIN code.
+	 * @return array Minimal item data for fallback display.
+	 */
+	public static function get_fallback_item( $asin ) {
+		$service     = Amazon::get_instance();
+		$locale      = $service->get_option( 'locale' ) ?: 'JP';
+		$partner_tag = self::get_partner_tag();
+		$cache_key   = 'hamazon_fallback_' . $asin . '_' . $locale;
+
+		// Check transient cache first.
+		$cached = get_transient( $cache_key );
+		if ( false !== $cached ) {
+			return $cached;
+		}
+
+		$url   = AmazonLocales::get_product_url( $asin, $locale, $partner_tag );
+		$title = self::scrape_amazon_title( $asin, $locale );
+
+		$item = apply_filters( 'hamazon_fallback_item', array(
+			'title'      => $title,
+			'rank'       => '',
+			'category'   => '',
+			'asin'       => $asin,
+			'price'      => '',
+			'attributes' => array(),
+			'date'       => '',
+			'date_gmt'   => '',
+			'image'      => '',
+			'images'     => array(
+				'medium' => '',
+				'large'  => '',
+			),
+			'url'        => $url,
+		), $asin, $locale, $partner_tag );
+
+		// Cache for 7 days (fallback data doesn't change often).
+		set_transient( $cache_key, $item, 7 * DAY_IN_SECONDS );
+
+		return $item;
+	}
+
+	/**
+	 * Scrape Amazon product page to get the title.
+	 *
+	 * @param string $asin   ASIN code.
+	 * @param string $locale Locale code.
+	 * @return string Product title or empty string on failure.
+	 */
+	private static function scrape_amazon_title( $asin, $locale ) {
+		$domain = AmazonLocales::get_product_domain( $locale );
+		$url    = sprintf( 'https://www.amazon.%s/dp/%s', $domain, $asin );
+
+		$response = wp_remote_get( $url, array(
+			'timeout'    => 10,
+			'user-agent' => 'Mozilla/5.0 (compatible; WordPress/' . get_bloginfo( 'version' ) . ')',
+		) );
+
+		if ( is_wp_error( $response ) ) {
+			return '';
+		}
+
+		$body = wp_remote_retrieve_body( $response );
+		if ( empty( $body ) ) {
+			return '';
+		}
+
+		// Try to extract title from <title> tag.
+		if ( preg_match( '/<title[^>]*>([^<]+)<\/title>/i', $body, $matches ) ) {
+			$title = trim( $matches[1] );
+			// Remove common suffixes like " | Amazon.co.jp" or " - Amazon.com".
+			$title = preg_replace( '/\s*[|\-]\s*Amazon\.[a-z.]+$/i', '', $title );
+			return html_entity_decode( $title, ENT_QUOTES, 'UTF-8' );
+		}
+
+		return '';
 	}
 
 	/**
