@@ -232,14 +232,15 @@ class AmazonConstants extends StaticPattern {
 	 * Get item from ASIN code.
 	 *
 	 * @since 5.0 Change return value.
-	 * @param string $asin
+	 * @param string $asin     ASIN code.
+	 * @param bool   $fallback Whether to return fallback data on API error. Default true.
 	 *
 	 * @return array|\WP_Error
 	 */
-	public static function get_item_by_asin( $asin ) {
+	public static function get_item_by_asin( $asin, $fallback = true ) {
 		$config = self::get_config();
 		if ( is_wp_error( $config ) ) {
-			return $config;
+			return $fallback ? self::get_fallback_item( $asin ) : $config;
 		}
 		$apiInstance = new DefaultApi(
 		/*
@@ -262,7 +263,7 @@ class AmazonConstants extends StaticPattern {
 		# Validating request
 		$invalid_properties = self::validate_request( $request );
 		if ( is_wp_error( $invalid_properties ) ) {
-			return $invalid_properties;
+			return $fallback ? self::get_fallback_item( $asin ) : $invalid_properties;
 		}
 
 		# Sending the request
@@ -270,13 +271,7 @@ class AmazonConstants extends StaticPattern {
 			$response = $apiInstance->getItems( $request );
 			$errors   = $response->getErrors();
 			if ( $errors ) {
-				$error = new \WP_Error();
-				foreach ( $errors as $e ) {
-					$error->add( 'invalid_request', $e->getMessage(), array(
-						'response' => $e->getCode(),
-					) );
-				}
-				return $error;
+				return $fallback ? self::get_fallback_item( $asin ) : new \WP_Error( 'invalid_request', $errors[0]->getMessage(), array( 'response' => $errors[0]->getCode() ) );
 			}
 
 			# Parsing the response
@@ -287,7 +282,7 @@ class AmazonConstants extends StaticPattern {
 			}
 			throw new \Exception( __( 'Sorry, but item not found.', 'hamazon' ) );
 		} catch ( \Exception $exception ) {
-			return new \WP_Error( 'api_request', sprintf( '[%s] %s', $exception->getCode(), $exception->getMessage() ) );
+			return $fallback ? self::get_fallback_item( $asin ) : new \WP_Error( 'api_request', sprintf( '[%s] %s', $exception->getCode(), $exception->getMessage() ) );
 		}
 	}
 
