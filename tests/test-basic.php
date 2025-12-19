@@ -15,9 +15,14 @@ class Hamazon_Basic_Test extends WP_UnitTestCase {
 	 *
 	 */
 	function test_functions() {
-		// Check domain exists.
-		$result = hamazon_asin_link( '11111111111' );
+		// Check WP_Error is returned when API is not configured and fallback is disabled.
+		$result = \Hametuha\WpHamazon\Constants\AmazonConstants::get_item_by_asin( '11111111111', false );
 		$this->assertWPError( $result );
+		// Check fallback display when API is not configured.
+		// Since v5.2.0, fallback HTML is returned instead of WP_Error.
+		$result = hamazon_asin_link( '11111111111' );
+		$this->assertIsString( $result );
+		$this->assertStringContainsString( 'wp-hamazon-amazon-fallback', $result );
 		// Check asset function
 		$url = hamazon_asset_url( '/css/hamazon.css' );
 		$this->assertEquals( 1, preg_match( '#^https?://#', $url ) );
