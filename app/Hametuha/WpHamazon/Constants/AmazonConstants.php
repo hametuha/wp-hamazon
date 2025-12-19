@@ -320,22 +320,39 @@ class AmazonConstants extends StaticPattern {
 				throw new \Exception( __( 'ASIN format is wrong.', 'hamazon' ), 400 );
 			}
 
-			$cache_key = 'amazon_api5_' . $asin;
-			$cache     = get_transient( $cache_key );
+			$cache_key   = 'amazon_api5_' . $asin;
+			$cache       = get_transient( $cache_key );
+			$is_fallback = false;
+
 			if ( false !== $cache ) {
+				// API cache hit.
 				$item = $cache;
 			} else {
-				// Pass false to get WP_Error on failure, so we can handle fallback ourselves.
-				$item = self::get_item_by_asin( $asin, false );
-			}
+				// Check fallback cache before calling API.
+				// If fallback cache exists, it means API recently failed (e.g., 403 error).
+				// Skip API call to avoid unnecessary requests.
+				$service            = Amazon::get_instance();
+				$locale             = $service->get_option( 'locale' ) ?: 'JP';
+				$fallback_cache_key = 'hamazon_fallback_' . $asin . '_' . $locale;
+				$fallback_cache     = get_transient( $fallback_cache_key );
 
-			$is_fallback = false;
-			if ( is_wp_error( $item ) ) {
-				// API failed, use fallback.
-				$item        = self::get_fallback_item( $asin );
-				$is_fallback = true;
-			} else {
-				set_transient( $cache_key, $item, 60 * 60 * 24 );
+				if ( false !== $fallback_cache ) {
+					// Fallback cache exists, use it without calling API.
+					$item        = $fallback_cache;
+					$is_fallback = true;
+				} else {
+					// No caches exist, try API.
+					$item = self::get_item_by_asin( $asin, false );
+
+					if ( is_wp_error( $item ) ) {
+						// API failed, use fallback.
+						$item        = self::get_fallback_item( $asin );
+						$is_fallback = true;
+					} else {
+						// API succeeded, cache for 1 year.
+						set_transient( $cache_key, $item, YEAR_IN_SECONDS );
+					}
+				}
 			}
 
 			$content = trim( $content );
