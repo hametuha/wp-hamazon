@@ -2,19 +2,24 @@
 /**
  * Library fixer.
  *
- * thewirecutter/paapi5-php-sdk is blocked by php lint error.
- * So fix it.
+ * thewirecutter/paapi5-php-sdk has classes that call parent::listInvalidProperties()
+ * without extending a parent class. This causes PHP Fatal errors.
  *
- * PHP Fatal error:  Cannot use "parent" when current class scope has no parent in vendor/thewirecutter/paapi5-php-sdk/src/com/amazon/paapi5/v1/Properties.php on line 176
- *
- * Fatal error: Cannot use "parent" when current class scope has no parent in vendor/thewirecutter/paapi5-php-sdk/src/com/amazon/paapi5/v1/Properties.php on line 176
- * Errors parsing vendor/thewirecutter/paapi5-php-sdk/src/com/amazon/paapi5/v1/Properties.php
+ * Affected files:
+ * - Properties.php
+ * - OfferListings.php
+ * - OfferListingsV2.php
  */
 
-$list_to_fix = [
-	[ 'vendor/thewirecutter/paapi5-php-sdk/src/com/amazon/paapi5/v1/Properties.php', '$invalidProperties = parent::listInvalidProperties();
+$needle   = '$invalidProperties = parent::listInvalidProperties();
 
-        return $invalidProperties;', 'return [];' ]
+        return $invalidProperties;';
+$replaced = 'return [];';
+
+$list_to_fix = [
+	[ 'vendor/thewirecutter/paapi5-php-sdk/src/com/amazon/paapi5/v1/Properties.php', $needle, $replaced ],
+	[ 'vendor/thewirecutter/paapi5-php-sdk/src/com/amazon/paapi5/v1/OfferListings.php', $needle, $replaced ],
+	[ 'vendor/thewirecutter/paapi5-php-sdk/src/com/amazon/paapi5/v1/OfferListingsV2.php', $needle, $replaced ],
 ];
 
 $done = [];
