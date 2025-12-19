@@ -6,7 +6,7 @@
  * Author: Hametuha
  * Author URI: https://hametuha.co.jp
  * Version: nightly
- * Requires at least: 5.6
+ * Requires at least: 6.1
  * Requires PHP: 7.4
  * Text Domain: hamazon
  * Domain Path: /languages/

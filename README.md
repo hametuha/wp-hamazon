@@ -43,6 +43,12 @@ These services below are deprecated.
 
 * Add fallback if you can't satisfy Amazon's Product Advertising API requirements.
 
+**NOTE:** PA-API now(Nov 13th 2025) requires at least 10 sales within 30 days via your account.
+If you fail to meet these sales requirements, the API will always return a 403 response.  
+Once this state is reached, you will no longer be able to add new links.  
+For this reason, we have provided a manual ASIN configuration feature in the block editor,
+along with a fallback layout that displays at least the title and URL when only an ASIN is specified.
+
 ### 5.1.4
 
 * Fix bug on classic editor.

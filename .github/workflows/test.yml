@@ -12,7 +12,7 @@ jobs:
   test:
     strategy:
       matrix:
-        php: [ '7.4', '8.1', '8.2', '8.3' ] # PHP versions to check.
+        php: [ '7.4', '8.3' ] # PHP versions to check.
         wp: [ 'latest', '6.1' ]             # WordPress version to check.
     uses: tarosky/workflows/.github/workflows/wp-unit-test.yml@main
     with:
@@ -43,6 +43,7 @@ jobs:
     uses: tarosky/workflows/.github/workflows/phplint.yml@main
     with:
       install_command: "composer install --no-dev && php bin/replacer.php"
+      php_versions: '["7.4", "8.3" ]'
 
   assets:
     name: Test Assets
