@@ -22,23 +22,30 @@ $list_to_fix = [
 	[ 'vendor/thewirecutter/paapi5-php-sdk/src/com/amazon/paapi5/v1/OfferListingsV2.php', $needle, $replaced ],
 ];
 
-$done = [];
+$done    = [];
+$skipped = [];
 
 foreach ( $list_to_fix as list( $path, $needle, $replaced ) ) {
 	if ( ! file_exists( $path ) ) {
-		printf( 'File not found: %s', $path );
-		exit( 1 );
+		$skipped[] = $path;
+		continue;
 	}
 	$contents = file_get_contents( $path );
 	if ( false === strpos( $contents, $needle ) ) {
-		printf( 'Needle not found: %s %s', $path . "\n\n", $needle );
-		exit( 1 );
+		// Already fixed or needle not found, skip.
+		$skipped[] = $path;
+		continue;
 	}
 	$content = str_replace( $needle, $replaced, $contents );
-	if( file_put_contents( $path, $content ) ) {
+	if ( file_put_contents( $path, $content ) ) {
 		$done[] = $path;
 	}
 }
 
-printf( "These files are replaced: \n%s\n", implode( "\n", $done ) );
+if ( ! empty( $done ) ) {
+	printf( "Fixed: \n%s\n", implode( "\n", $done ) );
+}
+if ( ! empty( $skipped ) ) {
+	printf( "Skipped: \n%s\n", implode( "\n", $skipped ) );
+}
 exit( 0 );
