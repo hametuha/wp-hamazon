@@ -7,7 +7,7 @@
  * Author URI: https://hametuha.co.jp
  * Version: nightly
  * Requires at least: 6.1
- * Requires PHP: 7.4
+ * Requires PHP: 8.1
  * Text Domain: hamazon
  * Domain Path: /languages/
  * License: GPLv3 or later
