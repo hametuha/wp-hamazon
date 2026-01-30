@@ -2,6 +2,11 @@
 <ruleset name="WordPress Coding Standards for Plugins">
 	<description>Generally-applicable sniffs for WordPress plugins</description>
 
+	<file>./app/Hametuha/</file>
+	<file>./wp-hamazon.php</file>
+	<file>./templates/</file>
+	<file>./template-parts/</file>
+
 	<arg name="colors" />
 	<arg value="ps" />
 
