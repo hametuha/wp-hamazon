@@ -220,4 +220,39 @@ class AmazonLocales {
 		}
 		return $url;
 	}
+
+	/**
+	 * Get marketplace domain for Creators API.
+	 *
+	 * @param string $locale Locale code (e.g., 'JP', 'US').
+	 * @return string Marketplace domain (e.g., 'www.amazon.co.jp').
+	 */
+	public static function get_marketplace( $locale ) {
+		$domain = self::get_product_domain( $locale );
+		return sprintf( 'www.amazon.%s', $domain );
+	}
+
+	/**
+	 * Get Creators API version for locale.
+	 *
+	 * Version mapping:
+	 * - 2.1: North America (US, CA, MX, BZ)
+	 * - 2.2: Europe (FR, DE, IT, NL, ES, UK, TK, AE, IN)
+	 * - 2.3: Far East (JP, AU, SP)
+	 *
+	 * @param string $locale Locale code (e.g., 'JP', 'US').
+	 * @return string API version (e.g., '2.3').
+	 */
+	public static function get_version( $locale ) {
+		$na_locales = [ 'US', 'CA', 'MX', 'BZ' ];
+		$fe_locales = [ 'JP', 'AU', 'SP' ];
+
+		if ( in_array( $locale, $na_locales, true ) ) {
+			return '2.1';
+		} elseif ( in_array( $locale, $fe_locales, true ) ) {
+			return '2.3';
+		}
+		// Default to EU version.
+		return '2.2';
+	}
 }
