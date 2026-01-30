@@ -16,9 +16,14 @@ Search on editor and add it immediately.
 
 ### Available Services
 
-* Amazon Advertising API(v5)
+* Amazon Creators API (formerly PA-API v5)
 * PHG iTunes affiliate
 * DMM affiliate
+
+### Requirements
+
+* PHP 8.1 or later
+* WordPress 6.0 or later
 
 ### Deprecated
 
@@ -38,6 +43,23 @@ These services below are deprecated.
 1. You can search affiliate like this screen.
 
 ##  Changelog
+
+### 6.0.0
+
+**Breaking Changes!**
+
+* **PHP 8.1 or later is now required.** Please check your server environment before updating.
+* Migrated from Amazon PA-API v5 to **Amazon Creators API**.
+  * PA-API v5 (Offers V1) was deprecated by Amazon on January 31, 2026.
+  * You need to obtain new credentials (Credential ID and Credential Secret) from [Associates Central > Tools > Creator API](https://affiliate.amazon.co.jp/tools/creator-api).
+  * Old Access Key / Secret Key will no longer work.
+* Settings field names changed:
+  * "Associate ID" → "Partner Tag"
+  * "Access Key" → "Credential ID"
+  * "Secret Key" → "Credential Secret"
+
+**Note:** Amazon Creators API requires at least 10 qualifying sales within 30 days per marketplace to maintain API access.
+If your account doesn't meet this requirement, the fallback feature (introduced in 5.2.0) will be used automatically.
 
 ### 5.2.0
 
