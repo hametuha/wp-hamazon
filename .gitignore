@@ -10,3 +10,5 @@ readme.txt
 wp-dependencies.json
 /.claude/
 *.cache
+/tmp/
+/docs/

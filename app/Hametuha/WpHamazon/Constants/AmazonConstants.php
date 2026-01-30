@@ -2,17 +2,16 @@
 
 namespace Hametuha\WpHamazon\Constants;
 
-use Amazon\ProductAdvertisingAPI\v1\ApiException;
-use Amazon\ProductAdvertisingAPI\v1\com\amazon\paapi5\v1\api\DefaultApi;
-use Amazon\ProductAdvertisingAPI\v1\com\amazon\paapi5\v1\GetItemsRequest;
-use Amazon\ProductAdvertisingAPI\v1\com\amazon\paapi5\v1\Item;
-use Amazon\ProductAdvertisingAPI\v1\Configuration;
-use Amazon\ProductAdvertisingAPI\v1\com\amazon\paapi5\v1\PartnerType;
-use Amazon\ProductAdvertisingAPI\v1\com\amazon\paapi5\v1\SearchItemsRequest;
-use Amazon\ProductAdvertisingAPI\v1\com\amazon\paapi5\v1\SearchItemsResource;
+use Amazon\CreatorsAPI\v1\ApiException;
+use Amazon\CreatorsAPI\v1\com\amazon\creators\api\DefaultApi;
+use Amazon\CreatorsAPI\v1\com\amazon\creators\model\GetItemsRequestContent;
+use Amazon\CreatorsAPI\v1\com\amazon\creators\model\GetItemsResource;
+use Amazon\CreatorsAPI\v1\com\amazon\creators\model\Item;
+use Amazon\CreatorsAPI\v1\com\amazon\creators\model\SearchItemsRequestContent;
+use Amazon\CreatorsAPI\v1\com\amazon\creators\model\SearchItemsResource;
+use Amazon\CreatorsAPI\v1\Configuration;
 use Hametuha\WpHamazon\Pattern\StaticPattern;
 use Hametuha\WpHamazon\Service\Amazon;
-use Tarosky\PlasticSearch\Api\Search;
 
 /**
  * Amazon constants holder
@@ -76,6 +75,7 @@ class AmazonConstants extends StaticPattern {
 	 * Search item with string.
 	 *
 	 * @since 5.0 Change return value.
+	 * @since 6.0 Use Creators API.
 	 *
 	 * @param string $keyword
 	 * @param int    $page
@@ -90,30 +90,30 @@ class AmazonConstants extends StaticPattern {
 		if ( is_wp_error( $config ) ) {
 			return $config;
 		}
-		$api_instance = new DefaultApi( new \GuzzleHttp\Client(), $config );
+		$api_instance = new DefaultApi( null, $config );
 		$item_count   = 10;
 		$page         = (int) min( 10, max( 1, $page ) );
 
-		# Forming the request
-		$request = new SearchItemsRequest();
+		// Forming the request
+		$request = new SearchItemsRequestContent();
 		$request->setSearchIndex( $index );
 		$request->setKeywords( $keyword );
 		$request->setItemCount( $item_count );
 		$request->setItemPage( $page );
-		//      $request->setLanguagesOfPreference( AmazonLocales::get_language_locale() ); // This raises api error.
 		$request->setPartnerTag( self::get_partner_tag() );
-		$request->setPartnerType( PartnerType::ASSOCIATES );
-		$request->setResources( self::get_resources() );
+		$request->setResources( self::get_search_resources() );
 		$request->setSortBy( $order );
+
 		$invalid_properties = self::validate_request( $request );
 		if ( is_wp_error( $invalid_properties ) ) {
 			return $invalid_properties;
 		}
 
-		# Sending the request
+		// Sending the request
 		try {
-			$response = $api_instance->searchItems( $request );
-			$errors   = $response->getErrors();
+			$marketplace = self::get_marketplace();
+			$response    = $api_instance->searchItems( $marketplace, $request );
+			$errors      = $response->getErrors();
 			if ( $errors ) {
 				$error = new \WP_Error();
 				foreach ( $errors as $e ) {
@@ -128,7 +128,7 @@ class AmazonConstants extends StaticPattern {
 			$total   = $items ? $items->getTotalResultCount() : 0;
 			$results = array(
 				'total_page'   => ceil( $total / 10 ),
-				'total_result' => $items->getTotalResultCount(),
+				'total_result' => $total,
 				'items'        => array(),
 			);
 			if ( $items ) {
@@ -145,6 +145,8 @@ class AmazonConstants extends StaticPattern {
 	/**
 	 * Convert item to associative array.
 	 *
+	 * @since 6.0 Updated for Creators API (OffersV2).
+	 *
 	 * @param Item $item
 	 * @return array
 	 */
@@ -153,11 +155,14 @@ class AmazonConstants extends StaticPattern {
 		$node   = $item->getBrowseNodeInfo();
 		$atts   = self::get_attributes( $info );
 		$price  = 'N/A';
-		$offers = $item->getOffers();
-		if ( $item->getOffers() ) {
-			foreach ( $item->getOffers()->getListings() as $offer ) {
-				$price = $offer->getPrice()->getDisplayAmount();
-				break;
+		$offers = $item->getOffersV2();
+		if ( $offers && $offers->getListings() ) {
+			foreach ( $offers->getListings() as $offer ) {
+				$offer_price = $offer->getPrice();
+				if ( $offer_price && $offer_price->getMoney() ) {
+					$price = $offer_price->getMoney()->getDisplayAmount();
+					break;
+				}
 			}
 		}
 		$date     = '';
@@ -173,19 +178,25 @@ class AmazonConstants extends StaticPattern {
 			}
 		}
 		$images = $item->getImages();
+		$rank   = '';
+		$cat    = '';
+		if ( $node && $node->getWebsiteSalesRank() ) {
+			$rank = $node->getWebsiteSalesRank()->getSalesRank();
+			$cat  = $node->getWebsiteSalesRank()->getDisplayName();
+		}
 		return apply_filters( 'hamazon_item_array', array(
 			'title'      => (string) $item->getItemInfo()->getTitle()->getDisplayValue(),
-			'rank'       => $node ? $item->getBrowseNodeInfo()->getWebsiteSalesRank()->getSalesRank() : '',
-			'category'   => $node ? $item->getBrowseNodeInfo()->getWebsiteSalesRank()->getDisplayName() : '',
-			'asin'       => $item->getASIN(),
+			'rank'       => $rank,
+			'category'   => $cat,
+			'asin'       => $item->getAsin(),
 			'price'      => $price,
 			'attributes' => $atts,
 			'date'       => $date,
 			'date_gmt'   => $date_gmt,
-			'image'      => $images ? $images->getPrimary()->getMedium()->getURL() : '',
+			'image'      => $images ? $images->getPrimary()->getMedium()->getUrl() : '',
 			'images'     => array(
-				'medium' => $images ? $images->getPrimary()->getMedium()->getURL() : '',
-				'large'  => $images ? $images->getPrimary()->getLarge()->getURL() : '',
+				'medium' => $images ? $images->getPrimary()->getMedium()->getUrl() : '',
+				'large'  => $images ? $images->getPrimary()->getLarge()->getUrl() : '',
 			),
 			'url'        => $item->getDetailPageURL(),
 		), $item );
@@ -232,6 +243,8 @@ class AmazonConstants extends StaticPattern {
 	 * Get item from ASIN code.
 	 *
 	 * @since 5.0 Change return value.
+	 * @since 6.0 Use Creators API.
+	 *
 	 * @param string $asin     ASIN code.
 	 * @param bool   $fallback Whether to return fallback data on API error. Default true.
 	 *
@@ -242,39 +255,32 @@ class AmazonConstants extends StaticPattern {
 		if ( is_wp_error( $config ) ) {
 			return $fallback ? self::get_fallback_item( $asin ) : $config;
 		}
-		$apiInstance = new DefaultApi(
-		/*
-		 * If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-		 * This is optional, `GuzzleHttp\Client` will be used as default.
-		 */
-			new \GuzzleHttp\Client(),
-			$config
-		);
+		$apiInstance = new DefaultApi( null, $config );
 
 		$item_ids = array( $asin );
 
-		# Forming the request
-		$request = new GetItemsRequest();
+		// Forming the request
+		$request = new GetItemsRequestContent();
 		$request->setItemIds( $item_ids );
 		$request->setPartnerTag( self::get_partner_tag() );
-		$request->setPartnerType( PartnerType::ASSOCIATES );
-		$request->setResources( self::get_resources() );
+		$request->setResources( self::get_item_resources() );
 
-		# Validating request
+		// Validating request
 		$invalid_properties = self::validate_request( $request );
 		if ( is_wp_error( $invalid_properties ) ) {
 			return $fallback ? self::get_fallback_item( $asin ) : $invalid_properties;
 		}
 
-		# Sending the request
+		// Sending the request
 		try {
-			$response = $apiInstance->getItems( $request );
-			$errors   = $response->getErrors();
+			$marketplace = self::get_marketplace();
+			$response    = $apiInstance->getItems( $marketplace, $request );
+			$errors      = $response->getErrors();
 			if ( $errors ) {
 				return $fallback ? self::get_fallback_item( $asin ) : new \WP_Error( 'invalid_request', $errors[0]->getMessage(), array( 'response' => $errors[0]->getCode() ) );
 			}
 
-			# Parsing the response
+			// Parsing the response
 			if ( $response->getItemsResult() ) {
 				foreach ( $response->getItemsResult()->getItems() as $item ) {
 					return self::convert_item( $item );
@@ -320,7 +326,7 @@ class AmazonConstants extends StaticPattern {
 				throw new \Exception( __( 'ASIN format is wrong.', 'hamazon' ), 400 );
 			}
 
-			$cache_key   = 'amazon_api5_' . $asin;
+			$cache_key   = 'amazon_creators_' . $asin;
 			$cache       = get_transient( $cache_key );
 			$is_fallback = false;
 
@@ -475,50 +481,90 @@ class AmazonConstants extends StaticPattern {
 	}
 
 	/**
-	 * Get resources about product information.
+	 * Get resources for SearchItems.
+	 *
+	 * @since 6.0 Updated for Creators API.
+	 *
+	 * @return array
 	 */
-	public static function get_resources() {
-		return apply_filters( 'hamazon_apa_resources', array(
-			SearchItemsResource::BROWSE_NODE_INFOWEBSITE_SALES_RANK,
-			SearchItemsResource::IMAGESPRIMARYLARGE,
-			SearchItemsResource::IMAGESPRIMARYMEDIUM,
-			SearchItemsResource::ITEM_INFOTITLE,
-			SearchItemsResource::ITEM_INFOBY_LINE_INFO,
-			SearchItemsResource::ITEM_INFOPRODUCT_INFO,
-			SearchItemsResource::ITEM_INFOCONTENT_INFO,
-			SearchItemsResource::ITEM_INFOEXTERNAL_IDS,
-			SearchItemsResource::ITEM_INFOTRADE_IN_INFO,
-			SearchItemsResource::ITEM_INFOMANUFACTURE_INFO,
-			SearchItemsResource::OFFERSLISTINGSPRICE,
+	public static function get_search_resources() {
+		return apply_filters( 'hamazon_search_resources', array(
+			SearchItemsResource::BROWSE_NODE_INFO_WEBSITE_SALES_RANK,
+			SearchItemsResource::IMAGES_PRIMARY_LARGE,
+			SearchItemsResource::IMAGES_PRIMARY_MEDIUM,
+			SearchItemsResource::ITEM_INFO_TITLE,
+			SearchItemsResource::ITEM_INFO_BY_LINE_INFO,
+			SearchItemsResource::ITEM_INFO_PRODUCT_INFO,
+			SearchItemsResource::ITEM_INFO_CONTENT_INFO,
+			SearchItemsResource::ITEM_INFO_EXTERNAL_IDS,
+			SearchItemsResource::ITEM_INFO_TRADE_IN_INFO,
+			SearchItemsResource::ITEM_INFO_MANUFACTURE_INFO,
+			SearchItemsResource::OFFERS_V2_LISTINGS_PRICE,
 			SearchItemsResource::PARENT_ASIN,
-			SearchItemsResource::OFFERSLISTINGSPROGRAM_ELIGIBILITYIS_PRIME_EXCLUSIVE,
-			SearchItemsResource::OFFERSLISTINGSPROGRAM_ELIGIBILITYIS_PRIME_PANTRY,
+		) );
+	}
+
+	/**
+	 * Get resources for GetItems.
+	 *
+	 * @since 6.0 Added for Creators API.
+	 *
+	 * @return array
+	 */
+	public static function get_item_resources() {
+		return apply_filters( 'hamazon_item_resources', array(
+			GetItemsResource::BROWSE_NODE_INFO_WEBSITE_SALES_RANK,
+			GetItemsResource::IMAGES_PRIMARY_LARGE,
+			GetItemsResource::IMAGES_PRIMARY_MEDIUM,
+			GetItemsResource::ITEM_INFO_TITLE,
+			GetItemsResource::ITEM_INFO_BY_LINE_INFO,
+			GetItemsResource::ITEM_INFO_PRODUCT_INFO,
+			GetItemsResource::ITEM_INFO_CONTENT_INFO,
+			GetItemsResource::ITEM_INFO_EXTERNAL_IDS,
+			GetItemsResource::ITEM_INFO_TRADE_IN_INFO,
+			GetItemsResource::ITEM_INFO_MANUFACTURE_INFO,
+			GetItemsResource::OFFERS_V2_LISTINGS_PRICE,
+			GetItemsResource::PARENT_ASIN,
 		) );
 	}
 
 	/**
 	 * Get configuration.
 	 *
+	 * @since 6.0 Updated for Creators API.
+	 *
 	 * @return Configuration|\WP_Error
 	 */
 	public static function get_config() {
-		$service    = Amazon::get_instance();
-		$access_key = $service->get_option( 'accessKey' );
-		$secret_key = $service->get_option( 'secretKey' );
-		$tag        = self::get_partner_tag();
-		$locale     = $service->get_option( 'locale' );
-		if ( ! ( $access_key && $tag && $locale && $secret_key ) ) {
+		$service           = Amazon::get_instance();
+		$credential_id     = $service->get_option( 'credentialId' );
+		$credential_secret = $service->get_option( 'credentialSecret' );
+		$tag               = self::get_partner_tag();
+		$locale            = $service->get_option( 'locale' );
+
+		if ( ! ( $credential_id && $credential_secret && $tag && $locale ) ) {
 			return new \WP_Error( 'hamazon_invalid_arguments', __( 'Amazon Associate setting is invalid. Please fill all information.', 'hamazon' ) );
 		}
+
 		$config = new Configuration();
-		$config->setAccessKey( $access_key );
-		$config->setSecretKey( $secret_key );
-		$host   = AmazonLocales::get_host( $locale );
-		$region = AmazonLocales::get_region( $locale );
-		$config->setHost( $host );
-		$config->setRegion( $region );
+		$config->setCredentialId( $credential_id );
+		$config->setCredentialSecret( $credential_secret );
+		$config->setVersion( AmazonLocales::get_version( $locale ) );
 
 		return $config;
+	}
+
+	/**
+	 * Get marketplace for API request.
+	 *
+	 * @since 6.0 Added for Creators API.
+	 *
+	 * @return string
+	 */
+	public static function get_marketplace() {
+		$service = Amazon::get_instance();
+		$locale  = $service->get_option( 'locale' ) ?: 'JP';
+		return AmazonLocales::get_marketplace( $locale );
 	}
 
 	/**
@@ -534,7 +580,7 @@ class AmazonConstants extends StaticPattern {
 	/**
 	 * Validate request.
 	 *
-	 * @param SearchItemsRequest|GetItemsRequest $request
+	 * @param SearchItemsRequestContent|GetItemsRequestContent $request
 	 *
 	 * @return true|\WP_Error
 	 */
@@ -543,8 +589,7 @@ class AmazonConstants extends StaticPattern {
 		$length             = count( $invalid_properties );
 		if ( $length > 0 ) {
 			return new \WP_Error( 'invalid_property', __( 'Invalid properties for request.', 'hamazon' ) );
-		} else {
-			true;
 		}
+		return true;
 	}
 }

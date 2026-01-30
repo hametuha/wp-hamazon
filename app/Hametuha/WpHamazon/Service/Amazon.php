@@ -26,15 +26,15 @@ class Amazon extends AbstractService {
 		return array(
 			array(
 				'key'   => 'associatesid',
-				'label' => __( 'Associate ID', 'hamazon' ),
+				'label' => __( 'Partner Tag', 'hamazon' ),
 			),
 			array(
-				'key'   => 'accessKey',
-				'label' => __( 'Access Key', 'hamazon' ),
+				'key'   => 'credentialId',
+				'label' => __( 'Credential ID', 'hamazon' ),
 			),
 			array(
-				'key'   => 'secretKey',
-				'label' => __( 'Secret Key', 'hamazon' ),
+				'key'   => 'credentialSecret',
+				'label' => __( 'Credential Secret', 'hamazon' ),
 			),
 			array(
 				'key'     => 'locale',
@@ -52,7 +52,7 @@ class Amazon extends AbstractService {
 	 * @return bool
 	 */
 	public function is_valid() {
-		return $this->get_option( 'associatesid' ) && $this->get_option( 'accessKey' ) && $this->get_option( 'secretKey' );
+		return $this->get_option( 'associatesid' ) && $this->get_option( 'credentialId' ) && $this->get_option( 'credentialSecret' );
 	}
 
 
@@ -158,7 +158,7 @@ class Amazon extends AbstractService {
 
 	protected function get_service_description() {
 		// translators: %s is a URL.
-		return sprintf( __( 'Display link via Amazon Advertising API. You can get credentials from <a href="%s" target="_blank" rel="noopener noreferrer">Associate Central</a>.', 'hamazon' ), 'https://affiliate.amazon.co.jp/assoc_credentials/home' );
+		return sprintf( __( 'Display link via Amazon Creators API. You can get credentials from <a href="%s" target="_blank" rel="noopener noreferrer">Associate Central</a> (Tools > Creator API).', 'hamazon' ), 'https://affiliate.amazon.co.jp/tools/creator-api' );
 	}
 
 

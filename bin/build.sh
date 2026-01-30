@@ -18,7 +18,6 @@ echo "Building version: ${VERSION} from tag: ${TAG_NAME}"
 
 # Build files
 composer install --no-dev --prefer-dist
-php bin/replacer.php
 
 # NPM packages.
 npm install
