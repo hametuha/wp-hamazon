@@ -39,7 +39,6 @@ jobs:
   phplint:
     uses: tarosky/workflows/.github/workflows/phplint.yml@main
     with:
-      install_command: "composer install --no-dev && php bin/replacer.php"
       php_versions: '["8.1", "8.3" ]'
 
   assets:
