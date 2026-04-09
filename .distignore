@@ -17,3 +17,7 @@ tests/
 readme.txt.bak
 wp-hamazon.php.bak
 CLAUDE.md
+phpstan.neon
+phpstan-baseline.neon
+phpstan-bootstrap.php
+.node-version
