@@ -73,9 +73,8 @@ jobs:
           node-version-file: '.node-version'
 
       - name: Install NPM Dependencies
-        # package-lock.json is not committed, so npm ci cannot be used.
         run: |
-          npm install --ignore-scripts
+          npm ci --ignore-scripts
           npm rebuild mozjpeg pngquant-bin optipng-bin gifsicle
 
       - name: Lint JS

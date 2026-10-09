@@ -32,8 +32,7 @@ jobs:
       - name: Install dependencies and build Assets
         run: |
           composer install --no-dev --prefer-dist
-          # package-lock.json is not committed, so npm ci cannot be used.
-          npm install --ignore-scripts
+          npm ci --ignore-scripts
           # imagemin needs binaries downloaded by install scripts.
           npm rebuild mozjpeg pngquant-bin optipng-bin gifsicle
           npm run package

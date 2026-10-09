@@ -4,8 +4,6 @@ vendor/
 node_modules/
 assets/
 /wordpress/
-composer.lock
-package-lock.json
 readme.txt
 wp-dependencies.json
 /.claude/

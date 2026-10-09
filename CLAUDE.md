@@ -151,7 +151,7 @@ Huskyにより、コミット前に以下が自動実行されます：
 `deploy.yml` 内で以下を実行（ローカルでは `npm run package` でアセットのみビルド）：
 
 1. Composer依存関係インストール（`--no-dev`）
-2. `npm install --ignore-scripts` 後、imagemin用バイナリのみ `npm rebuild`
+2. `npm ci --ignore-scripts` 後、imagemin用バイナリのみ `npm rebuild`
 3. `npm run package` でアセットビルド
 4. README.md から readme.txt を生成し、バージョン文字列を書き換え
 
