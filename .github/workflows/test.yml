@@ -1,4 +1,4 @@
-name: WordPress Plugin Workflow
+name: Test Plugin
 
 on:
   pull_request:
@@ -70,16 +70,21 @@ jobs:
       - name: Install NPM
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version-file: '.node-version'
 
       - name: Install NPM Dependencies
-        run: npm install
+        run: |
+          npm ci --ignore-scripts
+          npm rebuild mozjpeg pngquant-bin optipng-bin gifsicle
 
       - name: Lint JS
         run: npm run gulp eslint
 
       - name: Lint CSS
         run: npm run lint:css
+
+      - name: Build Assets
+        run: npm run package
 
   status:
     name: Status Check

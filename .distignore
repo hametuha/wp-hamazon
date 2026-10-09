@@ -21,3 +21,4 @@ phpstan.neon
 phpstan-baseline.neon
 phpstan-bootstrap.php
 .node-version
+package-lock.json

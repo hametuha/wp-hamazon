@@ -30,8 +30,7 @@ wp-hamazon/
 │   ├── js/                       # JavaScript/React
 │   └── scss/                     # スタイルシート
 ├── assets/                       # ビルド済みアセット（gitignore）
-├── bin/                          # ビルドスクリプト
-│   └── build.sh                 # リリース用ビルドスクリプト
+├── bin/                          # 補助スクリプト
 ├── .github/workflows/           # GitHub Actions
 └── wp-hamazon.php              # プラグインメインファイル
 
@@ -125,20 +124,21 @@ Huskyにより、コミット前に以下が自動実行されます：
 ### 自動化された部分
 
 1. **masterへのマージ** → `release-drafter.yml` が Draft Release を自動作成
-2. **GitHub UIでReleaseをパブリッシュ**（タグも同時に作成） → fumikitoさんの権限で実行
-3. **タグプッシュ** → `wordpress.yml` がWordPress.orgへ自動デプロイ
+2. **GitHub UIでDraft ReleaseをPublish**（タグ `vX.Y.Z` も同時に作成） → fumikitoさんの権限で実行
+3. **Release公開（`release: published`）** → `deploy.yml` がWordPress.orgへ自動デプロイし、zipをReleaseに添付
 
 ### ワークフロー詳細
 
+- **test.yml**（Test Plugin）: PRでPHPUnit・PHPCS・PHPStan・PHP lint・ESLint・Stylelint・アセットビルドを実行。`Status Check` がブランチ保護の必須チェック
+- **deploy.yml**: Release公開時にビルド → readme.txt生成 → バージョン書き換え（タグの `v` を除去） → WordPress.orgへデプロイ
 - **release-drafter.yml**: masterにマージされるたびにDraft Releaseを更新
-- **wordpress.yml**: `v*` タグがプッシュされたときにWordPress.orgへデプロイ
 - **wp-outdated.yml**: 月次でWordPressバージョン互換性をチェック
-- **test.yml**: PRやmasterへのプッシュ時にPHPUnit・リンター実行
+- **claude-review.yml / claude-assistant.yml / issue-triage.yml**: Claudeによるレビュー・アシスタント・イシュー仕分け
 
 ### 必要なGitHub Secrets
 
-- `WPORG_FUMIKI_USERNAME`: WordPress.orgのユーザー名
-- `WPORG_FUMIKI_PASSWORD`: WordPress.orgのアプリケーションパスワード
+- `WP_ORG_USERNAME` / `WP_ORG_PASSWORD`: WordPress.orgのSVN認証情報（deploy.yml）
+- `ANTHROPIC_API_KEY`: Claude系ワークフロー
 
 ### 環境保護設定
 
@@ -148,13 +148,12 @@ Huskyにより、コミット前に以下が自動実行されます：
 
 ## ビルドプロセス
 
-`bin/build.sh [tag]` で実行：
+`deploy.yml` 内で以下を実行（ローカルでは `npm run package` でアセットのみビルド）：
 
-1. タグ名から `v` プレフィックスを削除してバージョン抽出
-2. Composer依存関係インストール（`--no-dev`）
-3. NPM依存関係インストール
-4. `npm run package` でアセットビルド
-5. WordPress.orgへのデプロイ準備完了
+1. Composer依存関係インストール（`--no-dev`）
+2. `npm ci --ignore-scripts` 後、imagemin用バイナリのみ `npm rebuild`
+3. `npm run package` でアセットビルド
+4. README.md から readme.txt を生成し、バージョン文字列を書き換え
 
 ## 翻訳
 
