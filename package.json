@@ -68,6 +68,7 @@
 		"lint-staged": "^16.2.3",
 		"po2json": "^1.0.0-alpha",
 		"sass": "^1.69.5",
+		"terser-webpack-plugin": "^5.3.14",
 		"vinyl-named": "^1.1.0",
 		"webpack": "^5.89.0",
 		"webpack-stream": "^7.0.0"
