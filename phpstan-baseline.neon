@@ -1,0 +1,139 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 2
+			path: app/Hametuha/WpHamazon/BlockEditor.php
+
+		-
+			message: '#^Call to an undefined method Hametuha\\WpHamazon\\Pattern\\AbstractService\:\:is_valid\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Hametuha/WpHamazon/BootStrap.php
+
+		-
+			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: app/Hametuha/WpHamazon/BootStrap.php
+
+		-
+			message: '#^PHPDoc tag @var with type Hametuha\\WpHamazon\\Pattern\\AbstractService is not subtype of native type class\-string\.$#'
+			identifier: varTag.nativeType
+			count: 1
+			path: app/Hametuha/WpHamazon/BootStrap.php
+
+		-
+			message: '#^Parameter \#1 \$text of function esc_attr expects string, \(float\|int\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Hametuha/WpHamazon/BootStrap.php
+
+		-
+			message: '#^Parameter \#2 \$output of function get_post_types expects ''names''\|''objects'', ''OBJECT'' given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Hametuha/WpHamazon/BootStrap.php
+
+		-
+			message: '#^Call to method addRow\(\) on an unknown class cli\\Table\.$#'
+			identifier: class.notFound
+			count: 1
+			path: app/Hametuha/WpHamazon/Commands.php
+
+		-
+			message: '#^Call to method display\(\) on an unknown class cli\\Table\.$#'
+			identifier: class.notFound
+			count: 1
+			path: app/Hametuha/WpHamazon/Commands.php
+
+		-
+			message: '#^Call to method setHeaders\(\) on an unknown class cli\\Table\.$#'
+			identifier: class.notFound
+			count: 1
+			path: app/Hametuha/WpHamazon/Commands.php
+
+		-
+			message: '#^Instantiated class cli\\Table not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: app/Hametuha/WpHamazon/Commands.php
+
+		-
+			message: '#^Parameter \#1 \$sortBy of method Amazon\\CreatorsAPI\\v1\\com\\amazon\\creators\\model\\SearchItemsRequestContent\:\:setSortBy\(\) expects Amazon\\CreatorsAPI\\v1\\com\\amazon\\creators\\model\\SortBy\|null, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Hametuha/WpHamazon/Constants/AmazonConstants.php
+
+		-
+			message: '#^Call to an undefined method Hametuha\\WpHamazon\\Pattern\\AbstractService\:\:is_valid\(\)\.$#'
+			identifier: method.notFound
+			count: 4
+			path: app/Hametuha/WpHamazon/Pattern/AbstractService.php
+
+		-
+			message: '#^Function shortcode_ui_register_for_shortcode not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: app/Hametuha/WpHamazon/Pattern/AbstractService.php
+
+		-
+			message: '#^Method Hametuha\\WpHamazon\\Pattern\\AbstractService\:\:get_option\(\) should return string but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: app/Hametuha/WpHamazon/Pattern/AbstractService.php
+
+		-
+			message: '#^PHPDoc tag @return has invalid value \(string;\)\: Unexpected token ";", expected TOKEN_HORIZONTAL_WS at offset 46 on line 4$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: app/Hametuha/WpHamazon/Pattern/AbstractService.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 2
+			path: app/Hametuha/WpHamazon/Service/Amazon.php
+
+		-
+			message: '#^Method Hametuha\\WpHamazon\\Service\\Dmm\:\:attribute_to_csv\(\) is unused\.$#'
+			identifier: method.unused
+			count: 1
+			path: app/Hametuha/WpHamazon/Service/Dmm.php
+
+		-
+			message: '#^Parameter \#1 \$num of function number_format expects float, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Hametuha/WpHamazon/Service/Dmm.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 2
+			path: app/Hametuha/WpHamazon/Service/Dmm.php
+
+		-
+			message: '#^Anonymous function has an unused use \$args\.$#'
+			identifier: closure.unusedUse
+			count: 1
+			path: app/Hametuha/WpHamazon/Service/Phg.php
+
+		-
+			message: '#^Method Hametuha\\WpHamazon\\Service\\Phg\:\:affiliate_url\(\) should return string but returns false\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Hametuha/WpHamazon/Service/Phg.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 2
+			path: app/Hametuha/WpHamazon/Service/Phg.php
+
+		-
+			message: '#^Parameter \#2 \$version2 of function version_compare expects string, null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: wp-hamazon.php
