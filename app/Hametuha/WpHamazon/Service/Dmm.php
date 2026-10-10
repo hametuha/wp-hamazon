@@ -122,7 +122,7 @@ class Dmm extends AbstractService {
 					'key'   => $key,
 					'label' => $value,
 				);
-			}, array( 'DMM.com', 'DMM.R18' ), array( __( 'General', 'hamazon' ), __( 'Adult', 'hamazon' ) ) ),
+			}, array( 'DMM.com', 'DMM.R18', 'FANZA' ), array( __( 'General', 'hamazon' ), __( 'Adult', 'hamazon' ) ) ),
 		);
 	}
 
@@ -152,7 +152,7 @@ class Dmm extends AbstractService {
 				'required'            => true,
 				'description'         => __( 'Site to search. DMM.com or DMM.R18', 'hamazon' ),
 				'validation_callback' => function ( $site ) {
-					return in_array( $site, array( 'DMM.com', 'DMM.R18' ), true );
+					return in_array( $site, array( 'DMM.com', 'DMM.R18', 'FANZA' ), true );
 				},
 			),
 		);
@@ -177,8 +177,7 @@ class Dmm extends AbstractService {
 			) );
 			return $search_result;
 		}
-		$site = $request['site'];
-		$site = 'DMM.R18' === $request['site'] ? $request['site'] : 'DMM.com';
+		$site = 'DMM.R18' === $request['site'] ? 'FANZA' : 'DMM.com';
 		// Check if items exist and is an array
 		$items = isset( $search_result->result->items ) && is_array( $search_result->result->items )
 			? $search_result->result->items

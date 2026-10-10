@@ -13,7 +13,7 @@
 <div class="tmkm-amazon-view wp-hamazon-dmm" data-store="dmm">
 	<p class="tmkm-amazon-img">
 		<a href="<?php echo esc_url( $item->affiliateURL ); ?>" target="_blank" rel="sponsored noreferrer noopener">
-			<img class="tmkm-amazon-image" src="<?php echo isset( $item->imageURL->large ) ? $item->imageURL->large : hamazon_no_image(); ?>" alt=""/>
+			<img class="tmkm-amazon-image" src="<?php echo isset( $item->imageURL->large ) ? $item->imageURL->large : ( isset( $item->imageURL->small ) ? $item->imageURL->small : hamazon_no_image() ); ?>" alt=""/>
 		</a>
 	</p>
 	<p class="tmkm-amazon-title">
