@@ -74,12 +74,13 @@ class Phg extends AbstractService {
 					return $item;
 				}
 				$out = hamazon_template( 'phg', 'single', array(
-					'item'   => $item,
-					'price'  => $this->format_price( $item ),
-					'kind'   => $this->format_kind( $item ),
-					'link'   => $this->affiliate_url( $item ),
-					'image'  => $this->artwork_url( $item ),
-					'artist' => $this->format_artist_name( $item ),
+					'item'    => $item,
+					'content' => $content,
+					'price'   => $this->format_price( $item ),
+					'kind'    => $this->format_kind( $item ),
+					'link'    => $this->affiliate_url( $item ),
+					'image'   => $this->artwork_url( $item ),
+					'artist'  => $this->format_artist_name( $item ),
 				) );
 				/**
 				 * wp_hamazon_phg
@@ -326,7 +327,7 @@ class Phg extends AbstractService {
 	public function find_product( $id, $cache = true ) {
 		$lang = ( 'ja' === get_locale() ) ? 'ja_jp' : 'en_us';
 		$args = array(
-			'term'    => $id,
+			'id'      => $id,
 			'country' => strtoupper( explode( '_', $lang )[1] ),
 			'lang'    => $lang,
 		);
@@ -337,7 +338,7 @@ class Phg extends AbstractService {
 				return $transient;
 			}
 		}
-		$result = $this->make_request( self::SEARCH_API, $args );
+		$result = $this->make_request( self::LOOKUP_API, $args );
 		if ( is_wp_error( $result ) ) {
 			return $result;
 		} elseif ( ! $result->resultCount ) {
