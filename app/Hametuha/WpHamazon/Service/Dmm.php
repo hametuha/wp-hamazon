@@ -55,8 +55,9 @@ class Dmm extends AbstractService {
 					'attr'    => 'site',
 					'type'    => 'select',
 					'options' => array(
-						'DMM.com' => __( 'General', 'hamazon' ),
-						'DMM.R18' => __( 'Adult', 'hamazon' ),
+						'DMM.com' => 'DMM.com',
+						// DMM.R18 is now called FANZA. The value is kept for compatibility.
+						'DMM.R18' => 'FANZA',
 					),
 					'default' => 'DMM.com',
 				),
@@ -122,7 +123,7 @@ class Dmm extends AbstractService {
 					'key'   => $key,
 					'label' => $value,
 				);
-			}, array( 'DMM.com', 'DMM.R18' ), array( __( 'General', 'hamazon' ), __( 'Adult', 'hamazon' ) ) ),
+			}, array( 'DMM.com', 'DMM.R18' ), array( 'DMM.com', 'FANZA' ) ),
 		);
 	}
 
