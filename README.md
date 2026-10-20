@@ -57,6 +57,9 @@ Please do not post it publicly. Report security bugs through the [Patchstack Vul
 * Tested up to WordPress 7.1.
 * Bugfix: PHG (iTunes) items were displayed as "temporary unavailable" instead of the item.
 * Bugfix: Additional description was not displayed for PHG items.
+* DMM: Adult items (DMM.R18) are now requested as FANZA, its current name. Existing short codes keep working without changes.
+* DMM: Show the small image when the large image is not available. Props [@ellinikonblue](https://github.com/ellinikonblue)
+* DMM: The setting screen now explains that the affiliate ID for API (ends with -990 to -999) is required, and warns if another ID is saved.
 
 ### 6.0.0
 
