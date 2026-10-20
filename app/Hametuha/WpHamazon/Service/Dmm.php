@@ -148,10 +148,10 @@ class Dmm extends AbstractService {
 				},
 			),
 			'site'    => array(
-				'default'             => 'DMM.com',
-				'required'            => true,
-				'description'         => __( 'Site to search. DMM.com or DMM.R18', 'hamazon' ),
-				'validation_callback' => function ( $site ) {
+				'default'           => 'DMM.com',
+				'required'          => true,
+				'description'       => __( 'Site to search. DMM.com or DMM.R18', 'hamazon' ),
+				'validate_callback' => function ( $site ) {
 					return in_array( $site, array( 'DMM.com', 'DMM.R18' ), true );
 				},
 			),
@@ -228,7 +228,12 @@ class Dmm extends AbstractService {
 			'api_id'       => $this->get_option( 'dmm_api_id' ),
 			'affiliate_id' => $this->get_option( 'dmm_affiliate_id' ),
 		), $args);
-		$url    = add_query_arg( $params, $this->endpoint . $api );
+		// DMM.R18 was renamed to FANZA. Keep DMM.R18 in short codes for compatibility
+		// and send the current name to the API.
+		if ( isset( $params['site'] ) && 'DMM.R18' === $params['site'] ) {
+			$params['site'] = 'FANZA';
+		}
+		$url = add_query_arg( $params, $this->endpoint . $api );
 		// Make Request
 		$default_time_out = apply_filters( 'hamazon_default_timeout', 10, $params, 'dmm' );
 		$response         = wp_remote_get( $url, array(
@@ -270,7 +275,7 @@ class Dmm extends AbstractService {
 		$result = $this->make_request( 'ItemList', $args );
 		if ( is_wp_error( $result ) ) {
 			return $result;
-		} elseif ( ! $result->result->items ) {
+		} elseif ( empty( $result->result->items ) ) {
 			return new \WP_Error( '404', __( 'Sorry, but item not found.' ) );
 		} else {
 			$item = $result->result->items[0];
