@@ -20,7 +20,6 @@ phpunit.xml.dist
 stylelint.config.js
 webpack.config.js
 gulpfile.js
-composer.json
 composer.lock
 package.json
 package-lock.json
