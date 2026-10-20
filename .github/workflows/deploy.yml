@@ -17,6 +17,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          # Do not leave GITHUB_TOKEN in .git/config (it must never be shipped).
+          persist-credentials: false
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2

@@ -1,24 +1,39 @@
-phpunit.xml.dist
-composer.lock
+# VCS / CI
+.git
+.github/
+.gitignore
 .husky/
-.phpcs.ruleset.xml
+.distignore
+.wordpress-org/
+
+# Development config
 .browserslistrc
 .editorconfig
 .eslintrc
-.github/
-.gitignore
-gulpfile.js
-node_modules
-stylelint.config.js
-webpack.config.js
-bin/
-tests/
-.wordpress-org/
-readme.txt.bak
-wp-hamazon.php.bak
-CLAUDE.md
+.node-version
+.wp-env.json
+phpcs.ruleset.xml
 phpstan.neon
 phpstan-baseline.neon
 phpstan-bootstrap.php
-.node-version
+phpunit.xml.dist
+.phpunit.result.cache
+stylelint.config.js
+webpack.config.js
+gulpfile.js
+composer.json
+composer.lock
+package.json
 package-lock.json
+CLAUDE.md
+README.md
+
+# Sources and dev directories (built files are in assets/)
+/src
+node_modules
+bin/
+tests/
+
+# Backups created by deploy workflow
+readme.txt.bak
+wp-hamazon.php.bak
