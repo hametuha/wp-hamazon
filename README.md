@@ -52,6 +52,10 @@ Please do not post it publicly. Report security bugs through the [Patchstack Vul
 
 ##  Changelog
 
+### 6.0.2
+
+* Remove development files (including the `.git` directory) from the distributed package.
+
 ### 6.0.1
 
 * Tested up to WordPress 7.1.
