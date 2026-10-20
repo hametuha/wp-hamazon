@@ -2,7 +2,9 @@
 
 Contributors: Takahashi_Fumiki, hametuha  
 Tags: amazon, affiliate, dmm, phg  
-Tested up to: 6.8  
+Requires at least: 6.1  
+Requires PHP: 8.1  
+Tested up to: 7.1  
 Stable Tag: nightly  
 License: GPLv3 or later  
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -43,6 +45,12 @@ These services below are deprecated.
 1. You can search affiliate like this screen.
 
 ##  Changelog
+
+### 6.0.1
+
+* Tested up to WordPress 7.1.
+* Bugfix: PHG (iTunes) items were displayed as "temporary unavailable" instead of the item.
+* Bugfix: Additional description was not displayed for PHG items.
 
 ### 6.0.0
 
