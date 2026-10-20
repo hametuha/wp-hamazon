@@ -38,6 +38,12 @@ These services below are deprecated.
 1. Activate plugin.
 1. Go to `Setting > Affiliate Setting` and enter credentials.
 
+## Frequently Asked Questions
+
+### Where do I report security bugs found in this plugin?
+
+Please do not post it publicly. Report security bugs through the [Patchstack Vulnerability Disclosure Program](https://patchstack.com/database/report/wordpress/plugin/wp-hamazon). The Patchstack team will assist you with verification, CVE assignment, and notify the developers of this plugin.
+
 ##  Screenshots
 
 1. You can search affiliate like this screen.
