@@ -132,4 +132,18 @@ class Hamazon_Dmm_Test extends WP_UnitTestCase {
 		) ) );
 		$this->assertStringContainsString( 'src="' . esc_url( hamazon_no_image() ) . '"', $render( array() ) );
 	}
+
+	/**
+	 * Affiliate ID description warns when the ID is not for API.
+	 */
+	public function test_affiliate_id_description() {
+		$method = new ReflectionMethod( Dmm::class, 'affiliate_id_description' );
+		$method->setAccessible( true );
+		update_option( 'hamazon_dmm_affiliate_id', 'example-001' );
+		$this->assertStringContainsString( '<strong', $method->invoke( Dmm::get_instance() ) );
+		update_option( 'hamazon_dmm_affiliate_id', 'example-990' );
+		$this->assertStringNotContainsString( '<strong', $method->invoke( Dmm::get_instance() ) );
+		delete_option( 'hamazon_dmm_affiliate_id' );
+		$this->assertStringNotContainsString( '<strong', $method->invoke( Dmm::get_instance() ) );
+	}
 }

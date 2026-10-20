@@ -792,3 +792,19 @@ msgstr "https://hametuha.co.jp"
 
 #~ msgid "Gianism.info"
 #~ msgstr "Gianism.info"
+
+#: app/Hametuha/WpHamazon/Service/Dmm.php:114
+msgid ""
+"Enter the affiliate ID for API, which ends with -990 to -999. The affiliate "
+"ID for your site (e.g. -001) does not work."
+msgstr ""
+"API 用のアフィリエイト ID（末尾が -990〜-999）を入力してください。サイト用の"
+"アフィリエイト ID（-001 など）は使えません。"
+
+#: app/Hametuha/WpHamazon/Service/Dmm.php:117
+msgid ""
+"The current affiliate ID does not end with -990 to -999. DMM API will reject "
+"it."
+msgstr ""
+"現在のアフィリエイト ID は末尾が -990〜-999 ではないため、DMM API で拒否され"
+"ます。"

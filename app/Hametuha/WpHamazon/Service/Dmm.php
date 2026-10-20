@@ -31,7 +31,7 @@ class Dmm extends AbstractService {
 				'key'         => 'dmm_affiliate_id',
 				'label'       => __( 'Affiliate ID', 'hamazon' ),
 				// translators: %1$s is a label, %2$s is link to affiliate page.
-				'description' => sprintf( __( 'You can get %1$s <a href="%2$s" target="_blank">here</a>.', 'hamazon' ), __( 'Affiliate ID', 'hamazon' ), 'https://affiliate.dmm.com/account/index/' ),
+				'description' => $this->affiliate_id_description(),
 			),
 			array(
 				'key'         => 'dmm_api_id',
@@ -99,6 +99,24 @@ class Dmm extends AbstractService {
 				return '';
 				break;
 		}
+	}
+
+	/**
+	 * Description of the affiliate ID field.
+	 *
+	 * DMM API accepts only the affiliate ID for API (ends with -990 to -999).
+	 *
+	 * @return string
+	 */
+	protected function affiliate_id_description() {
+		// translators: %1$s is a label, %2$s is link to affiliate page.
+		$description  = sprintf( __( 'You can get %1$s <a href="%2$s" target="_blank">here</a>.', 'hamazon' ), __( 'Affiliate ID', 'hamazon' ), 'https://affiliate.dmm.com/api/id_confirm/' );
+		$description .= ' ' . __( 'Enter the affiliate ID for API, which ends with -990 to -999. The affiliate ID for your site (e.g. -001) does not work.', 'hamazon' );
+		$current      = (string) get_option( 'hamazon_dmm_affiliate_id', '' );
+		if ( $current && ! preg_match( '/-99\d$/', $current ) ) {
+			$description .= sprintf( '<br /><strong style="color: #d63638;">%s</strong>', __( 'The current affiliate ID does not end with -990 to -999. DMM API will reject it.', 'hamazon' ) );
+		}
+		return $description;
 	}
 
 	/**
