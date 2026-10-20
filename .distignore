@@ -17,7 +17,6 @@ phpstan.neon
 phpstan-baseline.neon
 phpstan-bootstrap.php
 phpunit.xml.dist
-.phpunit.result.cache
 stylelint.config.js
 webpack.config.js
 gulpfile.js
