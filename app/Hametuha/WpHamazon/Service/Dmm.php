@@ -31,7 +31,7 @@ class Dmm extends AbstractService {
 				'key'         => 'dmm_affiliate_id',
 				'label'       => __( 'Affiliate ID', 'hamazon' ),
 				// translators: %1$s is a label, %2$s is link to affiliate page.
-				'description' => sprintf( __( 'You can get %1$s <a href="%2$s" target="_blank">here</a>.', 'hamazon' ), __( 'Affiliate ID', 'hamazon' ), 'https://affiliate.dmm.com/account/index/' ),
+				'description' => $this->affiliate_id_description(),
 			),
 			array(
 				'key'         => 'dmm_api_id',
@@ -55,8 +55,9 @@ class Dmm extends AbstractService {
 					'attr'    => 'site',
 					'type'    => 'select',
 					'options' => array(
-						'DMM.com' => __( 'General', 'hamazon' ),
-						'DMM.R18' => __( 'Adult', 'hamazon' ),
+						'DMM.com' => 'DMM.com',
+						// DMM.R18 is now called FANZA. The value is kept for compatibility.
+						'DMM.R18' => 'FANZA',
 					),
 					'default' => 'DMM.com',
 				),
@@ -101,6 +102,24 @@ class Dmm extends AbstractService {
 	}
 
 	/**
+	 * Description of the affiliate ID field.
+	 *
+	 * DMM API accepts only the affiliate ID for API (ends with -990 to -999).
+	 *
+	 * @return string
+	 */
+	protected function affiliate_id_description() {
+		// translators: %1$s is a label, %2$s is link to affiliate page.
+		$description  = sprintf( __( 'You can get %1$s <a href="%2$s" target="_blank">here</a>.', 'hamazon' ), __( 'Affiliate ID', 'hamazon' ), 'https://affiliate.dmm.com/api/id_confirm/' );
+		$description .= ' ' . __( 'Enter the affiliate ID for API, which ends with -990 to -999. The affiliate ID for your site (e.g. -001) does not work.', 'hamazon' );
+		$current      = (string) get_option( 'hamazon_dmm_affiliate_id', '' );
+		if ( $current && ! preg_match( '/-99\d$/', $current ) ) {
+			$description .= sprintf( '<br /><strong style="color: #d63638;">%s</strong>', __( 'The current affiliate ID does not end with -990 to -999. DMM API will reject it.', 'hamazon' ) );
+		}
+		return $description;
+	}
+
+	/**
 	 * Detect if this service is valid.
 	 *
 	 * @return bool
@@ -122,7 +141,7 @@ class Dmm extends AbstractService {
 					'key'   => $key,
 					'label' => $value,
 				);
-			}, array( 'DMM.com', 'DMM.R18' ), array( __( 'General', 'hamazon' ), __( 'Adult', 'hamazon' ) ) ),
+			}, array( 'DMM.com', 'DMM.R18' ), array( 'DMM.com', 'FANZA' ) ),
 		);
 	}
 
@@ -148,10 +167,10 @@ class Dmm extends AbstractService {
 				},
 			),
 			'site'    => array(
-				'default'             => 'DMM.com',
-				'required'            => true,
-				'description'         => __( 'Site to search. DMM.com or DMM.R18', 'hamazon' ),
-				'validation_callback' => function ( $site ) {
+				'default'           => 'DMM.com',
+				'required'          => true,
+				'description'       => __( 'Site to search. DMM.com or DMM.R18', 'hamazon' ),
+				'validate_callback' => function ( $site ) {
 					return in_array( $site, array( 'DMM.com', 'DMM.R18' ), true );
 				},
 			),
@@ -228,7 +247,12 @@ class Dmm extends AbstractService {
 			'api_id'       => $this->get_option( 'dmm_api_id' ),
 			'affiliate_id' => $this->get_option( 'dmm_affiliate_id' ),
 		), $args);
-		$url    = add_query_arg( $params, $this->endpoint . $api );
+		// DMM.R18 was renamed to FANZA. Keep DMM.R18 in short codes for compatibility
+		// and send the current name to the API.
+		if ( isset( $params['site'] ) && 'DMM.R18' === $params['site'] ) {
+			$params['site'] = 'FANZA';
+		}
+		$url = add_query_arg( $params, $this->endpoint . $api );
 		// Make Request
 		$default_time_out = apply_filters( 'hamazon_default_timeout', 10, $params, 'dmm' );
 		$response         = wp_remote_get( $url, array(
@@ -270,7 +294,7 @@ class Dmm extends AbstractService {
 		$result = $this->make_request( 'ItemList', $args );
 		if ( is_wp_error( $result ) ) {
 			return $result;
-		} elseif ( ! $result->result->items ) {
+		} elseif ( empty( $result->result->items ) ) {
 			return new \WP_Error( '404', __( 'Sorry, but item not found.' ) );
 		} else {
 			$item = $result->result->items[0];
