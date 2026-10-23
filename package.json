@@ -77,9 +77,6 @@
 		"browser": true
 	},
 	"engines": {
-		"node": "18.20.8"
-	},
-	"volta": {
-		"node": "18.20.8"
+		"node": ">=22.23.4"
 	}
 }
