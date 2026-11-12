@@ -88,14 +88,14 @@ composer lint
 ### コミット
 
 ```bash
-# Claudeとの共著コミット（Co-authored-by自動付与）
-git cc-commit "コミットメッセージ"
+# エージェントとの共著コミット（Co-authored-by自動付与。第1引数はエージェント名: claude / codex）
+git ai-commit claude "コミットメッセージ"
 
 # 通常のコミット
 git commit -m "メッセージ"
 ```
 
-**注意**: `git cc-commit` はエイリアスで、コミットメッセージの末尾に `Co-authored-by: Claude <noreply@anthropic.com>` が自動追加されます。
+**注意**: `git ai-commit` は第1引数のエージェント名に応じた `Co-authored-by` トレーラーをコミットメッセージ末尾に自動追加します。旧 `git cc-commit` は `git ai-commit claude` の互換エイリアスです。
 
 ### GitHub CLI
 
