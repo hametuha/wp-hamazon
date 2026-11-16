@@ -85,8 +85,8 @@ class BootStrap extends Singleton {
 	public function admin_menu() {
 		// Add a new menu under Options:
 		add_options_page(
-			__( 'Hamazon Affiliate Setting', 'hamazon' ),
-			__( 'Affiliate Setting', 'hamazon' ),
+			__( 'Hamazon Affiliate Setting', 'wp-hamazon' ),
+			__( 'Affiliate Setting', 'wp-hamazon' ),
 			'manage_options',
 			'wp-hamazon',
 			array( $this, 'options_page' )
@@ -111,7 +111,7 @@ class BootStrap extends Singleton {
 	public function register_settings() {
 		add_settings_section(
 			'hamazon_setting_general',
-			__( 'General Setting', 'hamazon' ),
+			__( 'General Setting', 'wp-hamazon' ),
 			function () {
 			},
 			'wp-hamazon'
@@ -120,7 +120,7 @@ class BootStrap extends Singleton {
 		// Post types
 		add_settings_field(
 			'hamazon_post_types',
-			__( 'Available Post Types', 'hamazon' ),
+			__( 'Available Post Types', 'wp-hamazon' ),
 			function () {
 				$post_types = array_filter( get_post_types( array( 'public' => true ), OBJECT ), function ( $post_type ) {
 					return 'attachment' !== $post_type->name;
@@ -148,11 +148,11 @@ class BootStrap extends Singleton {
 		// Load CSS
 		add_settings_field(
 			'hamazon_load_css',
-			__( 'Load CSS', 'hamazon' ),
+			__( 'Load CSS', 'wp-hamazon' ),
 			function () {
 				foreach ( array(
-					'1' => __( 'Load CSS', 'hamazon' ),
-					''  => __( 'No CSS', 'hamazon' ),
+					'1' => __( 'Load CSS', 'wp-hamazon' ),
+					''  => __( 'No CSS', 'wp-hamazon' ),
 				) as $value => $label ) {
 					printf(
 						'<label class="hamazon-inline-block"><input type="radio" name="hamazon_load_css" value="%s" %s/> %s</label>',
@@ -164,9 +164,9 @@ class BootStrap extends Singleton {
 				?>
 				<p class="description">
 					<?php
-					esc_html_e( 'If you need original CSS, put "tmkm-amazon.css" in your theme folder. It will override default CSS.', 'hamazon' );
+					esc_html_e( 'If you need original CSS, put "tmkm-amazon.css" in your theme folder. It will override default CSS.', 'wp-hamazon' );
 					// translators: %s is "No CSS"
-					printf( esc_html__( 'If you choose "%s", nothing will be loaded.', 'hamazon' ), esc_html__( 'No CSS', 'hamazon' ) );
+					printf( esc_html__( 'If you choose "%s", nothing will be loaded.', 'wp-hamazon' ), esc_html__( 'No CSS', 'wp-hamazon' ) );
 					?>
 				</p>
 				<?php
@@ -200,13 +200,14 @@ class BootStrap extends Singleton {
 			switch ( $setting['ext'] ) {
 				case 'js':
 					wp_register_script( $handle, $url, $setting['deps'], $version, true );
+					// Language packs ship one JSON per script file.
+					wp_set_script_translations( $handle, 'wp-hamazon' );
 					break;
 				case 'css':
 					wp_register_style( $handle, $url, $setting['deps'], $version );
 					break;
 			}
 		}
-		wp_set_script_translations( 'hamazon-i18n', 'hamazon', hamazon_root_dir() . '/languages' );
 		wp_localize_script( 'hamazon-i18n', 'Hamazon', array(
 			'url'      => hamazon_asset_url( '' ),
 			'services' => $this->service_data_for_script(),
@@ -214,8 +215,8 @@ class BootStrap extends Singleton {
 		// Localize for Classic Editor
 		wp_localize_script( 'hamazon-editor', 'HamazonEditor', array(
 			'icon'     => hamazon_asset_url( 'img/button-icon.png' ),
-			'btnLabel' => __( 'Affiliate', 'hamazon' ),
-			'title'    => __( 'Affiliate Search', 'hamazon' ),
+			'btnLabel' => __( 'Affiliate', 'wp-hamazon' ),
+			'title'    => __( 'Affiliate Search', 'wp-hamazon' ),
 			'services' => $this->service_data_for_script(),
 		) );
 	}
@@ -234,7 +235,7 @@ class BootStrap extends Singleton {
 			array_unshift( $links, sprintf(
 				'<a href="%s">%s</a>',
 				admin_url( 'options-general.php?page=wp-hamazon' ),
-				__( 'Setting', 'hamazon' )
+				__( 'Setting', 'wp-hamazon' )
 			) );
 
 		}

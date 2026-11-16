@@ -26,22 +26,22 @@
 		</a>
 	</p>
 	<p class="category">
-		<span class="label tmkm-amazon-label"><?php esc_html_e( 'Category', 'hamazon' ); ?></span>
+		<span class="label tmkm-amazon-label"><?php esc_html_e( 'Category', 'wp-hamazon' ); ?></span>
 		<em class="tmkm-amazon-value"><?php echo esc_html( $kind ); ?></em>
 	</p>
 	<p class="price tmkm-amazon-row tmkm-amazon-price">
-		<span class="label tmkm-amazon-label"><?php esc_html_e( 'Price', 'hamazon' ); ?></span>
+		<span class="label tmkm-amazon-label"><?php esc_html_e( 'Price', 'wp-hamazon' ); ?></span>
 		<em class="tmkm-amazon-value tmkm-amazon-price-number"><?php echo esc_html( $price ); ?></em>
 	</p>
 	<?php if ( isset( $item->genres ) && $item->genres ) : ?>
 		<p class="genre tmkm-amazon-row">
-			<span class="label tmkm-amazon-label"><?php esc_html_e( 'Genre', 'hamazon' ); ?></span>
+			<span class="label tmkm-amazon-label"><?php esc_html_e( 'Genre', 'wp-hamazon' ); ?></span>
 			<em class="tmkm-amazon-value"><?php echo esc_html( implode( ', ', $item->genres ) ); ?></em>
 		</p>
 	<?php endif; ?>
 	<?php
 	foreach ( array(
-		'author' => array( __( 'Author', 'hamazon' ), $artist ),
+		'author' => array( __( 'Author', 'wp-hamazon' ), $artist ),
 	) as $key => $labels ) :
 		list( $label, $name ) = $labels;
 		?>
@@ -57,7 +57,7 @@
 	<?php endif; ?>
 	<p class="tmkm-amazon-actions">
 		<a class="btn tmkm-amazon-btn tmkm-amazon-btn-phg" href="<?php echo esc_url( $link ); ?>" target="_blank" rel="sponsored noreferrer noopener">
-			<?php esc_html_e( 'Open iTunes', 'hamazon' ); ?>
+			<?php esc_html_e( 'Open iTunes', 'wp-hamazon' ); ?>
 		</a>
 	</p>
 	<p class="tmkm-amazon-vendor vendor">

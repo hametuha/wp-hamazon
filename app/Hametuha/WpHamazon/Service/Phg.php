@@ -42,9 +42,9 @@ class Phg extends AbstractService {
 		return array(
 			array(
 				'key'         => 'phg_id',
-				'label'       => __( 'Affiliate ID', 'hamazon' ),
+				'label'       => __( 'Affiliate ID', 'wp-hamazon' ),
 				// translators: %1$s is label, %2$s is affiliate ID link.
-				'description' => sprintf( __( 'You can get %1$s <a href="%2$s" target="_blank">here</a>.', 'hamazon' ), __( 'Affiliate ID', 'hamazon' ), 'https://www.apple.com/jp/itunes/affiliates/' ),
+				'description' => sprintf( __( 'You can get %1$s <a href="%2$s" target="_blank">here</a>.', 'wp-hamazon' ), __( 'Affiliate ID', 'wp-hamazon' ), 'https://www.apple.com/jp/itunes/affiliates/' ),
 			),
 		);
 	}
@@ -58,7 +58,7 @@ class Phg extends AbstractService {
 					'type'  => 'text',
 				),
 				array(
-					'label' => __( 'Kind', 'hamazon' ),
+					'label' => __( 'Kind', 'wp-hamazon' ),
 					'attr'  => 'kind',
 					'type'  => 'text',
 				),
@@ -144,7 +144,7 @@ class Phg extends AbstractService {
 		return array(
 			'keyword' => array(
 				'required'          => true,
-				'description'       => __( 'Search keyword.', 'hamazon' ),
+				'description'       => __( 'Search keyword.', 'wp-hamazon' ),
 				'validate_callback' => function ( $keyword ) {
 					return ! empty( $keyword );
 				},
@@ -152,7 +152,7 @@ class Phg extends AbstractService {
 			'media'   => array(
 				'required'            => true,
 				'default'             => 'all',
-				'description'         => __( 'Genre', 'hamazon' ),
+				'description'         => __( 'Genre', 'wp-hamazon' ),
 				'validation_callback' => function ( $media ) {
 					return array_key_exists( $media, $this->get_genre() );
 				},
@@ -160,7 +160,7 @@ class Phg extends AbstractService {
 			'country' => array(
 				'default'             => 'US',
 				'required'            => true,
-				'description'         => __( 'Country code', 'hamazon' ),
+				'description'         => __( 'Country code', 'wp-hamazon' ),
 				'validation_callback' => function ( $country ) {
 					return in_array( $country, array_keys( $this->get_countries() ), true );
 				},
@@ -259,7 +259,7 @@ class Phg extends AbstractService {
 	 * @return string
 	 */
 	public function format_artist_name( $item ) {
-		return $this->get_available_attributes( $item, array( 'artistName', 'sellerName' ), _x( 'Unknown', 'search_result', 'hamazon' ) );
+		return $this->get_available_attributes( $item, array( 'artistName', 'sellerName' ), _x( 'Unknown', 'search_result', 'wp-hamazon' ) );
 	}
 
 	/**
@@ -310,7 +310,7 @@ class Phg extends AbstractService {
 		}
 		$json = json_decode( $result['body'] );
 		if ( ! $json ) {
-			return new \WP_Error( 'hamazon_phg_failed', __( 'Failed to get iTunes response.', 'hamazon' ), array(
+			return new \WP_Error( 'hamazon_phg_failed', __( 'Failed to get iTunes response.', 'wp-hamazon' ), array(
 				'status' => 500,
 			) );
 		}
@@ -383,10 +383,10 @@ class Phg extends AbstractService {
 			return $genre[ $kind ];
 		}
 		$others = array(
-			'book'                => __( 'Book', 'hamazon' ),
-			'album'               => __( 'Album', 'hamazon' ),
-			'coached-audio'       => __( 'Coached Audio', 'hamazon' ),
-			'interactive-booklet' => __( 'Interactive Booklet', 'hamazon' ),
+			'book'                => __( 'Book', 'wp-hamazon' ),
+			'album'               => __( 'Album', 'wp-hamazon' ),
+			'coached-audio'       => __( 'Coached Audio', 'wp-hamazon' ),
+			'interactive-booklet' => __( 'Interactive Booklet', 'wp-hamazon' ),
 			'pdf'                 => 'PDF',
 		);
 		return isset( $others[ $kind ] ) ? $others[ $kind ] : $kind;
@@ -399,16 +399,16 @@ class Phg extends AbstractService {
 	 */
 	public function get_genre() {
 		return array(
-			'all'        => __( 'All', 'hamazon' ),
-			'movie'      => __( 'Movie', 'hamazon' ),
-			'podcast'    => __( 'Podcast', 'hamazon' ),
-			'music'      => __( 'Music', 'hamazon' ),
-			'musicVideo' => __( 'Music Video', 'hamazon' ),
-			'audiobook'  => __( 'Audio Book', 'hamazon' ),
-			'shortFilm'  => __( 'Short Film', 'hamazon' ),
-			'tvShow'     => __( 'TV Show', 'hamazon' ),
-			'software'   => __( 'Software', 'hamazon' ),
-			'ebook'      => __( 'eBook', 'hamazon' ),
+			'all'        => __( 'All', 'wp-hamazon' ),
+			'movie'      => __( 'Movie', 'wp-hamazon' ),
+			'podcast'    => __( 'Podcast', 'wp-hamazon' ),
+			'music'      => __( 'Music', 'wp-hamazon' ),
+			'musicVideo' => __( 'Music Video', 'wp-hamazon' ),
+			'audiobook'  => __( 'Audio Book', 'wp-hamazon' ),
+			'shortFilm'  => __( 'Short Film', 'wp-hamazon' ),
+			'tvShow'     => __( 'TV Show', 'wp-hamazon' ),
+			'software'   => __( 'Software', 'wp-hamazon' ),
+			'ebook'      => __( 'eBook', 'wp-hamazon' ),
 		);
 	}
 

@@ -22,8 +22,6 @@
 		"fix:js": "eslint --fix --ext .js,.jsx -c .eslintrc src/js",
 		"fix:css": "stylelint --fix src/scss",
 		"lint:css": "stylelint --fix src/scss",
-		"jed": "po2json languages/hamazon-$LOCALE.po languages/hamazon-$LOCALE-hamazon-i18n.json -f jed",
-		"jed-ja": "po2json languages/hamazon-ja.po languages/hamazon-ja-hamazon-i18n.json -f jed",
 		"prepare": "husky"
 	},
 	"repository": {
@@ -66,7 +64,6 @@
 		"imagemin-pngquant": "9.0",
 		"jest": "^29.7.0",
 		"lint-staged": "^16.2.3",
-		"po2json": "^1.0.0-beta",
 		"sass": "^1.108.1",
 		"terser-webpack-plugin": "^5.6.1",
 		"vinyl-named": "^1.1.0",

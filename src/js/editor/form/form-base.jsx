@@ -110,7 +110,7 @@ class FormBase extends React.Component {
 									this.submitHandler( event );
 								} );
 							} }>
-							{ __( 'Previous', 'hamazon' ) }
+							{ __( 'Previous', 'wp-hamazon' ) }
 						</button>
 					) : null;
 				} )() }
@@ -148,7 +148,7 @@ class FormBase extends React.Component {
 									this.submitHandler( event );
 								} );
 							} }>
-							{ __( 'Next', 'hamazon' ) }
+							{ __( 'Next', 'wp-hamazon' ) }
 						</button>
 					) : null;
 				} )() }

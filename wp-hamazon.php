@@ -8,8 +8,7 @@
  * Version: nightly
  * Requires at least: 6.1
  * Requires PHP: 8.1
- * Text Domain: hamazon
- * Domain Path: /languages/
+ * Text Domain: wp-hamazon
  * License: GPLv3 or later
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  */
@@ -63,8 +62,7 @@ function hamazon_init() {
  * @since 5.1.4
  */
 function hamazon_bootstrap() {
-	// Load translations.
-	load_plugin_textdomain( 'hamazon', false, basename( __DIR__ ) . '/languages' );
+	// Translations are loaded just-in-time from WordPress.org language packs.
 	// Bootstrap
 	require_once __DIR__ . '/vendor/autoload.php';
 	Hametuha\WpHamazon\BootStrap::get_instance();
@@ -86,7 +84,7 @@ function hamazon_warnings() {
 		'<div class="error"><p>%s</p></div>',
 		sprintf(
 			// translators: %1$s is PHP version, %2$s is current PHP version.
-			esc_html__( 'Hamazon requires PHP %1$s and over, but your version is %2$s.', 'hamazon' ),
+			esc_html__( 'Hamazon requires PHP %1$s and over, but your version is %2$s.', 'wp-hamazon' ),
 			hamazon_info( 'php' ),
 			phpversion()
 		)

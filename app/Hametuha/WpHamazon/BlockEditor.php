@@ -35,7 +35,7 @@ class BlockEditor extends Singleton {
 		}
 		// Register variables.
 		wp_localize_script( 'hamazon-block', 'HamazonBlock', array(
-			'title'      => __( 'Affiliate', 'hamazon' ),
+			'title'      => __( 'Affiliate', 'wp-hamazon' ),
 			'services'   => $this->hamazon->service_data_for_script(),
 			'attributes' => $this->get_attributes(),
 			'shortCodes' => $this->get_types(),
@@ -51,9 +51,9 @@ class BlockEditor extends Singleton {
 				) );
 				try {
 					if ( empty( $attributes['type'] ) ) {
-						throw new \Exception( __( 'No data is set.', 'hamazon' ) );
+						throw new \Exception( __( 'No data is set.', 'wp-hamazon' ) );
 					} elseif ( ! in_array( $attributes['type'], $this->get_types(), true ) ) {
-						throw new \Exception( __( 'No affiliate service available.', 'hamazon' ) );
+						throw new \Exception( __( 'No affiliate service available.', 'wp-hamazon' ) );
 					}
 					if ( 'amazon' === $attributes['type'] ) {
 						$attributes['asin'] = $attributes['id'];
@@ -67,7 +67,7 @@ class BlockEditor extends Singleton {
 						}
 					}
 					if ( ! $key ) {
-						throw new \Exception( __( 'Failed to get proper contents.', 'hamazon' ) );
+						throw new \Exception( __( 'Failed to get proper contents.', 'wp-hamazon' ) );
 					}
 					$result = $instance->short_code_callback( $key, $attributes, $contents );
 					if ( is_wp_error( $result ) ) {
@@ -78,7 +78,7 @@ class BlockEditor extends Singleton {
 					return sprintf(
 						'<p class="hamazon-block-no-content"><!-- %s -->%s</p>',
 						esc_html( $e->getMessage() ),
-						esc_html__( 'Sorry, but this link is temporary unavailable. Please try again later.', 'hamazon' )
+						esc_html__( 'Sorry, but this link is temporary unavailable. Please try again later.', 'wp-hamazon' )
 					);
 				}
 			},

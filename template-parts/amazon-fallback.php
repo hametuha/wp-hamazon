@@ -29,21 +29,21 @@ $image_url = hamazon_no_image();
 				echo esc_html( $item['title'] );
 			} else {
 				// translators: %s is ASIN code.
-				echo esc_html( sprintf( __( 'Amazon Product (ASIN: %s)', 'hamazon' ), $asin ) );
+				echo esc_html( sprintf( __( 'Amazon Product (ASIN: %s)', 'wp-hamazon' ), $asin ) );
 			}
 			?>
 		</a>
 	</p>
 
 	<p class="tmkm-amazon-fallback-notice">
-		<small><?php esc_html_e( 'Product details are currently unavailable. Click the link to view on Amazon.', 'hamazon' ); ?></small>
+		<small><?php esc_html_e( 'Product details are currently unavailable. Click the link to view on Amazon.', 'wp-hamazon' ); ?></small>
 	</p>
 
 	<?php echo $desc; ?>
 
 	<p class="tmkm-amazon-actions">
 		<a class="btn tmkm-amazon-btn tmkm-amazon-btn-amazon" href="<?php echo esc_url( $item['url'] ); ?>" target="_blank" rel="sponsored noreferrer noopener">
-			<?php esc_html_e( 'Open Amazon', 'hamazon' ); ?>
+			<?php esc_html_e( 'Open Amazon', 'wp-hamazon' ); ?>
 		</a>
 	</p>
 	<p class="vendor tmkm-amazon-vendor">

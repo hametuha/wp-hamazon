@@ -47,7 +47,7 @@ class FormPhg extends FormBase {
 				<div className="hamazon-modal-form">
 					<div className="hamazon-modal-form-item">
 						<label htmlFor="hamazon-input-amazon-category"
-							className="hamazon-modal-form-label">{ __( 'Category', 'hamazon' ) }</label>
+							className="hamazon-modal-form-label">{ __( 'Category', 'wp-hamazon' ) }</label>
 						<select id="hamazon-input-amazon-category" value={ this.state.selectedMedia }
 							onChange={ ( e ) => {
 								this.onMediaChange( e );
@@ -59,7 +59,7 @@ class FormPhg extends FormBase {
 					</div>
 					<div className="hamazon-modal-form-item">
 						<label htmlFor="hamazon-input-phg-country"
-							className="hamazon-modal-form-label">{ __( 'Countries', 'hamazon' ) }</label>
+							className="hamazon-modal-form-label">{ __( 'Countries', 'wp-hamazon' ) }</label>
 						<select id="hamazon-input-phg-country" value={ this.state.selectedCountry }
 							onChange={ ( e ) => {
 								this.onCountryChange( e );
@@ -71,7 +71,7 @@ class FormPhg extends FormBase {
 					</div>
 					<div className="hamazon-modal-form-item input">
 						<label htmlFor="hamazon-input-amazon-query"
-							className="hamazon-modal-form-label">{ __( 'Search Terms', 'hamazon' ) }</label>
+							className="hamazon-modal-form-label">{ __( 'Search Terms', 'wp-hamazon' ) }</label>
 						<input id="hamazon-input-amazon-query" className="regular-text hamazon-modal-input-text input-control"
 							value={ this.state.query }
 							onChange={ ( e ) => this.onInputChange( e ) } />
@@ -79,7 +79,7 @@ class FormPhg extends FormBase {
 					<div className="hamazon-modal-form-item">
 						<button onClick={ ( e ) => {
 							this.submitHandler( e );
-						} } className="button-primary">{ __( 'Search', 'hamazon' ) }
+						} } className="button-primary">{ __( 'Search', 'wp-hamazon' ) }
 						</button>
 					</div>
 				</div>

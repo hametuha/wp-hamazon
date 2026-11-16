@@ -104,10 +104,10 @@ abstract class AbstractService extends Singleton {
 			add_action( 'register_shortcode_ui', function () use ( $short_code, $setting ) {
 				shortcode_ui_register_for_shortcode( $short_code, array(
 					// translators: %s is Service name.
-					'label'         => sprintf( __( '%s Affiliate Tag', 'hamazon' ), $this->title ),
+					'label'         => sprintf( __( '%s Affiliate Tag', 'wp-hamazon' ), $this->title ),
 					'listItemImage' => 'dashicons-money',
 					'inner_content' => array(
-						'label' => __( 'Content', 'hamazon' ),
+						'label' => __( 'Content', 'wp-hamazon' ),
 					),
 					'attrs'         => $setting,
 				) );
@@ -150,9 +150,9 @@ abstract class AbstractService extends Singleton {
 		$section = "hamazon_setting_{$this->name}";
 		$title   = $this->title . sprintf( '<span class="dashicons dashicons-%s"></span>', $this->is_valid() ? 'yes' : 'no' );
 		if ( $this->is_valid() ) {
-			$icon = sprintf( '<small class="valid"><span class="dashicons dashicons-yes"></span> %s</small>', esc_html__( 'Valid', 'hamazon' ) );
+			$icon = sprintf( '<small class="valid"><span class="dashicons dashicons-yes"></span> %s</small>', esc_html__( 'Valid', 'wp-hamazon' ) );
 		} else {
-			$icon = sprintf( '<small class="invalid"><span class="dashicons dashicons-no"></span> %s</small>', esc_html__( 'Invalid', 'hamazon' ) );
+			$icon = sprintf( '<small class="invalid"><span class="dashicons dashicons-no"></span> %s</small>', esc_html__( 'Invalid', 'wp-hamazon' ) );
 		}
 		add_settings_section(
 			$section,
