@@ -85,14 +85,14 @@ class SearchBox extends React.Component {
 					} } setLoading={ ( isLoading ) => this.setLoading( isLoading ) } service={ this.props.service } />
 					<div className="hamazon-search-result-empty">
 						<div className="hamazon-modal-search-result-empty">
-							{ __( 'No results found. Please try different query.', 'hamazon' ) }
+							{ __( 'No results found. Please try different query.', 'wp-hamazon' ) }
 						</div>
 					</div>
 				</div>
 			);
 		}
 		return <div className={ classes }>
-			<div className="hamazon-modal-search-result-error">{ __( 'This service is not available.', 'hamazon' ) }</div>
+			<div className="hamazon-modal-search-result-error">{ __( 'This service is not available.', 'wp-hamazon' ) }</div>
 		</div>;
 	}
 }

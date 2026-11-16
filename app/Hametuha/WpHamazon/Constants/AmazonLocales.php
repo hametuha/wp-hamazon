@@ -156,12 +156,12 @@ class AmazonLocales {
 	 */
 	public static function get_sort_orders() {
 		return array(
-			'AvgCustomerReviews' => _x( 'Review Rank', 'Sort order', 'hamazon' ),
-			'Featured'           => _x( 'Featured', 'Sort order', 'hamazon' ),
-			'NewestArrival'      => _x( 'Newer', 'Sort order', 'hamazon' ),
-			'Price:HighToLow'    => _x( 'Higher Cost', 'Sort order', 'hamazon' ),
-			'Price:LowToHigh'    => _x( 'Cheaper Cost', 'Sort order', 'hamazon' ),
-			'Relevance'          => _x( 'Relevant', 'Sort order', 'hamazon' ),
+			'AvgCustomerReviews' => _x( 'Review Rank', 'Sort order', 'wp-hamazon' ),
+			'Featured'           => _x( 'Featured', 'Sort order', 'wp-hamazon' ),
+			'NewestArrival'      => _x( 'Newer', 'Sort order', 'wp-hamazon' ),
+			'Price:HighToLow'    => _x( 'Higher Cost', 'Sort order', 'wp-hamazon' ),
+			'Price:LowToHigh'    => _x( 'Cheaper Cost', 'Sort order', 'wp-hamazon' ),
+			'Relevance'          => _x( 'Relevant', 'Sort order', 'wp-hamazon' ),
 		);
 	}
 

@@ -22,19 +22,19 @@
 		</a>
 	</p>
 	<p class="tmkm-amazon-row tmkm-amazon-genre">
-		<span class="label tmkm-amazon-label"><?php esc_html_e( 'Category', 'hamazon' ); ?></span>
+		<span class="label tmkm-amazon-label"><?php esc_html_e( 'Category', 'wp-hamazon' ); ?></span>
 		<em class="tmkm-amazon-value"><?php echo esc_html( $item->category_name ); ?></em>
 	</p>
 	<p class="tmkm-amazon-row tmkm-amazon-price price">
-		<span class="label tmkm-amazon-label"><?php esc_html_e( 'Price', 'hamazon' ); ?></span>
+		<span class="label tmkm-amazon-label"><?php esc_html_e( 'Price', 'wp-hamazon' ); ?></span>
 		<em class="tmkm-amazon-value"><?php echo esc_html( $price ); ?></em>
 	</p>
 	<?php
 	foreach ( array(
-		'manufacture' => __( 'Publisher', 'hamazon' ),
-		'maker'       => __( 'Publisher', 'hamazon' ),
-		'author'      => __( 'Author', 'hamazon' ),
-		'genre'       => __( 'Genre', 'hamazon' ),
+		'manufacture' => __( 'Publisher', 'wp-hamazon' ),
+		'maker'       => __( 'Publisher', 'wp-hamazon' ),
+		'author'      => __( 'Author', 'wp-hamazon' ),
+		'genre'       => __( 'Genre', 'wp-hamazon' ),
 	) as $key => $label ) :
 		if ( empty( $item->iteminfo->{$key} ) ) {
 			continue;
@@ -58,7 +58,7 @@
 	<?php endif; ?>
 	<p class="tmkm-amazon-actions">
 		<a class="btn tmkm-amazon-btn tmkm-amazon-btn-dmm" href="<?php echo esc_url( $item->affiliateURL ); ?>" target="_blank" rel="sponsored noreferrer noopener">
-			<?php esc_html_e( 'Open DMM', 'hamazon' ); ?>
+			<?php esc_html_e( 'Open DMM', 'wp-hamazon' ); ?>
 		</a>
 	</p>
 	<p class="tmkm-amazon-vendor vendor">

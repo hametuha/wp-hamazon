@@ -35,10 +35,10 @@ class FormAmazon extends FormBase {
 					<div className="hamazon-modal-form-item input">
 						<label htmlFor="hamazon-input-amazon-query"
 							className="hamazon-modal-form-label">
-							{ __( 'Search Keyword', 'hamazon' ) }
+							{ __( 'Search Keyword', 'wp-hamazon' ) }
 						</label>
 						<input id="hamazon-input-amazon-query" className="regular-text hamazon-modal-input-text input-control"
-							placeholder={ __( 'Enter search keywords…', 'hamazon' ) }
+							placeholder={ __( 'Enter search keywords…', 'wp-hamazon' ) }
 							value={ this.state.query }
 							onChange={ ( e ) => {
 								this.setState( {
@@ -49,7 +49,7 @@ class FormAmazon extends FormBase {
 					</div>
 					<div className="hamazon-modal-form-item">
 						<label htmlFor="hamazon-input-amazon-category"
-							className="hamazon-modal-form-label">{ __( 'Category', 'hamazon' ) }</label>
+							className="hamazon-modal-form-label">{ __( 'Category', 'wp-hamazon' ) }</label>
 						<select id="hamazon-input-amazon-category" value={ this.state.selectedOption }
 							onChange={ ( e ) => {
 								this.setState( {
@@ -65,7 +65,7 @@ class FormAmazon extends FormBase {
 					{ service.data.orders && (
 						<div className="hamazon-modal-form-item">
 							<label htmlFor="hamazon-input-amazon-order"
-								className="hamazon-modal-form-label">{ __( 'Order', 'hamazon' ) }</label>
+								className="hamazon-modal-form-label">{ __( 'Order', 'wp-hamazon' ) }</label>
 							<select id="hamazon-input-amazon-order" value={ this.state.selectedOrder }
 								onChange={ ( e ) => {
 									this.setState( {
@@ -82,7 +82,7 @@ class FormAmazon extends FormBase {
 						<button onClick={ ( e ) => {
 							this.submitHandler( e );
 						} } className="button-primary">
-							{ __( 'Search', 'hamazon' ) }
+							{ __( 'Search', 'wp-hamazon' ) }
 						</button>
 					</div>
 				</div>

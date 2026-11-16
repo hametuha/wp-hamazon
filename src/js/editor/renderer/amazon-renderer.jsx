@@ -40,14 +40,14 @@ class AmazonRenderer extends BaseRenderer {
 				continue;
 			}
 			meta.push( {
-				label: __( 'Brand', 'hamazon' ),
+				label: __( 'Brand', 'wp-hamazon' ),
 				value: item.attributes[ key ],
 			} );
 			break;
 		}
 		if ( item.date ) {
 			meta.push( {
-				label: __( 'Release Date', 'hamazon' ),
+				label: __( 'Release Date', 'wp-hamazon' ),
 				value: item.date,
 			} );
 		}

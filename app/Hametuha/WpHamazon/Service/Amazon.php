@@ -26,19 +26,19 @@ class Amazon extends AbstractService {
 		return array(
 			array(
 				'key'   => 'associatesid',
-				'label' => __( 'Partner Tag', 'hamazon' ),
+				'label' => __( 'Partner Tag', 'wp-hamazon' ),
 			),
 			array(
 				'key'   => 'credentialId',
-				'label' => __( 'Credential ID', 'hamazon' ),
+				'label' => __( 'Credential ID', 'wp-hamazon' ),
 			),
 			array(
 				'key'   => 'credentialSecret',
-				'label' => __( 'Credential Secret', 'hamazon' ),
+				'label' => __( 'Credential Secret', 'wp-hamazon' ),
 			),
 			array(
 				'key'     => 'locale',
-				'label'   => __( 'Locale', 'hamazon' ),
+				'label'   => __( 'Locale', 'wp-hamazon' ),
 				'default' => 'JP',
 				'type'    => 'radio',
 				'options' => AmazonLocales::get_locale_labels(),
@@ -90,14 +90,14 @@ class Amazon extends AbstractService {
 		return array(
 			'query' => array(
 				'required'          => true,
-				'description'       => __( 'Search keyword.', 'hamazon' ),
+				'description'       => __( 'Search keyword.', 'wp-hamazon' ),
 				'validate_callback' => function ( $query ) {
 					return ! empty( $query );
 				},
 			),
 			'page'  => array(
 				'default'           => 1,
-				'description'       => __( 'Specified page.', 'hamazon' ),
+				'description'       => __( 'Specified page.', 'wp-hamazon' ),
 				'validate_callback' => function ( $page ) {
 					return is_numeric( $page ) && ( 0 < $page );
 				},
@@ -105,7 +105,7 @@ class Amazon extends AbstractService {
 			'index' => array(
 				'default'             => 'All',
 				'required'            => true,
-				'description'         => __( 'Search category.', 'hamazon' ),
+				'description'         => __( 'Search category.', 'wp-hamazon' ),
 				'validation_callback' => function ( $index ) {
 					$indexed = AmazonConstants::get_search_index();
 					return isset( $indexed[ $index ] );
@@ -158,7 +158,7 @@ class Amazon extends AbstractService {
 
 	protected function get_service_description() {
 		// translators: %s is a URL.
-		return sprintf( __( 'Display link via Amazon Creators API. You can get credentials from <a href="%s" target="_blank" rel="noopener noreferrer">Associate Central</a> (Tools > Creator API).', 'hamazon' ), 'https://affiliate.amazon.co.jp/tools/creator-api' );
+		return sprintf( __( 'Display link via Amazon Creators API. You can get credentials from <a href="%s" target="_blank" rel="noopener noreferrer">Associate Central</a> (Tools > Creator API).', 'wp-hamazon' ), 'https://affiliate.amazon.co.jp/tools/creator-api' );
 	}
 
 

@@ -29,15 +29,15 @@ class Dmm extends AbstractService {
 		return array(
 			array(
 				'key'         => 'dmm_affiliate_id',
-				'label'       => __( 'Affiliate ID', 'hamazon' ),
+				'label'       => __( 'Affiliate ID', 'wp-hamazon' ),
 				// translators: %1$s is a label, %2$s is link to affiliate page.
 				'description' => $this->affiliate_id_description(),
 			),
 			array(
 				'key'         => 'dmm_api_id',
-				'label'       => __( 'API ID', 'hamazon' ),
+				'label'       => __( 'API ID', 'wp-hamazon' ),
 				// translators: %1$s is a label, %2$s is link to affiliate page.
-				'description' => sprintf( __( 'You can get %1$s <a href="%2$s" target="_blank">here</a>.', 'hamazon' ), __( 'API ID', 'hamazon' ), 'https://affiliate.dmm.com/api/id_confirm/' ),
+				'description' => sprintf( __( 'You can get %1$s <a href="%2$s" target="_blank">here</a>.', 'wp-hamazon' ), __( 'API ID', 'wp-hamazon' ), 'https://affiliate.dmm.com/api/id_confirm/' ),
 			),
 		);
 	}
@@ -46,12 +46,12 @@ class Dmm extends AbstractService {
 		return array(
 			'dmm' => array(
 				array(
-					'label' => __( 'Product ID', 'hamazon' ),
+					'label' => __( 'Product ID', 'wp-hamazon' ),
 					'attr'  => 'id',
 					'type'  => 'text',
 				),
 				array(
-					'label'   => __( 'Site', 'hamazon' ),
+					'label'   => __( 'Site', 'wp-hamazon' ),
 					'attr'    => 'site',
 					'type'    => 'select',
 					'options' => array(
@@ -62,7 +62,7 @@ class Dmm extends AbstractService {
 					'default' => 'DMM.com',
 				),
 				array(
-					'label' => __( 'Floor', 'hamazon' ),
+					'label' => __( 'Floor', 'wp-hamazon' ),
 					'attr'  => 'floor',
 					'type'  => 'text',
 				),
@@ -110,11 +110,11 @@ class Dmm extends AbstractService {
 	 */
 	protected function affiliate_id_description() {
 		// translators: %1$s is a label, %2$s is link to affiliate page.
-		$description  = sprintf( __( 'You can get %1$s <a href="%2$s" target="_blank">here</a>.', 'hamazon' ), __( 'Affiliate ID', 'hamazon' ), 'https://affiliate.dmm.com/api/id_confirm/' );
-		$description .= ' ' . __( 'Enter the affiliate ID for API, which ends with -990 to -999. The affiliate ID for your site (e.g. -001) does not work.', 'hamazon' );
+		$description  = sprintf( __( 'You can get %1$s <a href="%2$s" target="_blank">here</a>.', 'wp-hamazon' ), __( 'Affiliate ID', 'wp-hamazon' ), 'https://affiliate.dmm.com/api/id_confirm/' );
+		$description .= ' ' . __( 'Enter the affiliate ID for API, which ends with -990 to -999. The affiliate ID for your site (e.g. -001) does not work.', 'wp-hamazon' );
 		$current      = (string) get_option( 'hamazon_dmm_affiliate_id', '' );
 		if ( $current && ! preg_match( '/-99\d$/', $current ) ) {
-			$description .= sprintf( '<br /><strong style="color: #d63638;">%s</strong>', __( 'The current affiliate ID does not end with -990 to -999. DMM API will reject it.', 'hamazon' ) );
+			$description .= sprintf( '<br /><strong style="color: #d63638;">%s</strong>', __( 'The current affiliate ID does not end with -990 to -999. DMM API will reject it.', 'wp-hamazon' ) );
 		}
 		return $description;
 	}
@@ -154,14 +154,14 @@ class Dmm extends AbstractService {
 		return array(
 			'keyword' => array(
 				'required'          => true,
-				'description'       => __( 'Search keyword.', 'hamazon' ),
+				'description'       => __( 'Search keyword.', 'wp-hamazon' ),
 				'validate_callback' => function ( $keyword ) {
 					return ! empty( $keyword );
 				},
 			),
 			'page'    => array(
 				'default'           => 1,
-				'description'       => __( 'Specified page.', 'hamazon' ),
+				'description'       => __( 'Specified page.', 'wp-hamazon' ),
 				'validate_callback' => function ( $page ) {
 					return is_numeric( $page ) && ( 0 < $page );
 				},
@@ -169,7 +169,7 @@ class Dmm extends AbstractService {
 			'site'    => array(
 				'default'           => 'DMM.com',
 				'required'          => true,
-				'description'       => __( 'Site to search. DMM.com or DMM.R18', 'hamazon' ),
+				'description'       => __( 'Site to search. DMM.com or DMM.R18', 'wp-hamazon' ),
 				'validate_callback' => function ( $site ) {
 					return in_array( $site, array( 'DMM.com', 'DMM.R18' ), true );
 				},
@@ -263,7 +263,7 @@ class Dmm extends AbstractService {
 		}
 		$result = json_decode( $response['body'] );
 		if ( ! $result ) {
-			return new \WP_Error( 500, __( 'DMM API returns bad response.', 'hamazon' ) );
+			return new \WP_Error( 500, __( 'DMM API returns bad response.', 'wp-hamazon' ) );
 		}
 		return $result;
 	}

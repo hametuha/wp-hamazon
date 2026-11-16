@@ -10,7 +10,7 @@ class BaseRenderer extends React.Component {
 	copy( event, copy ) {
 		event.preventDefault();
 		// eslint-disable-next-line no-alert
-		window.prompt( __( 'Copy this string.', 'hamazon' ), copy );
+		window.prompt( __( 'Copy this string.', 'wp-hamazon' ), copy );
 	}
 
 	getTitle() {
@@ -59,16 +59,16 @@ class BaseRenderer extends React.Component {
 						<button className="button-primary" onClick={ ( event ) => {
 							event.preventDefault();
 							this.props.selectHandler( this.getCode() );
-						} }>{ __( 'Insert', 'hamazon' ) }</button>
+						} }>{ __( 'Insert', 'wp-hamazon' ) }</button>
 						<button className="button" onClick={ ( e ) => {
 							this.copy( e, this.getCode() );
-						} }>{ __( 'Copy Code', 'hamazon' ) }</button>
+						} }>{ __( 'Copy Code', 'wp-hamazon' ) }</button>
 						<a className="button" href={ this.props.item.url } target="_blank" rel="noopener noreferer noreferrer">
-							{ __( 'View', 'hamazon' ) }
+							{ __( 'View', 'wp-hamazon' ) }
 						</a>
 						<button className="button" onClick={ ( e ) => {
 							this.copy( e, this.props.item.url );
-						} }>{ __( 'Copy Link', 'hamazon' ) }</button>
+						} }>{ __( 'Copy Link', 'wp-hamazon' ) }</button>
 						{ ( () => {
 							return this.extraButtons();
 						} )() }

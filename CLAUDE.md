@@ -157,9 +157,9 @@ Huskyにより、コミット前に以下が自動実行されます：
 
 ## 翻訳
 
-- **テキストドメイン**: `hamazon`
-- **読み込みタイミング**: `init` アクション（WordPress 6.7.0+対応）
-- **ファイル**: `languages/` ディレクトリ
+- **テキストドメイン**: `wp-hamazon`（WordPress.org のスラッグと一致させること。不一致だと言語パックが読み込まれない）
+- **翻訳ファイル**: プラグインには同梱しない。translate.wordpress.org の言語パック（`.mo` / `.l10n.php` / JS ファイルごとの JSON）を WordPress が just-in-time で読み込む
+- **JS**: `BootStrap::register_assets()` で全スクリプトハンドルに `wp_set_script_translations()` を設定している
 
 ## WordPress統合
 

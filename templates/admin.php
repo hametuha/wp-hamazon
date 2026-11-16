@@ -10,7 +10,7 @@
 		}(document, 'script', 'facebook-jssdk'));</script>
 
 	<h1 class="wp-heading-inline">
-		<?php echo esc_html__( 'Hamazon Affiliate Setting', 'hamazon' ); ?>
+		<?php echo esc_html__( 'Hamazon Affiliate Setting', 'wp-hamazon' ); ?>
 	</h1>
 
 	<div class="hamazon-wrapper">
@@ -31,26 +31,26 @@
 				<img src="<?php echo hamazon_asset_url( '/img/admin-banner.jpg' ); ?>" alt="Hamazon" class="hamazon-sidebar-banner">
 
 				<h3 class="hamazon-sidebar-title">
-					<?php esc_html_e( 'Related Links', 'hamazon' ); ?>
+					<?php esc_html_e( 'Related Links', 'wp-hamazon' ); ?>
 				</h3>
 
 				<ul class="hamazon-sidebar-list">
 					<li>
 						<?php
 						// translators: %s is a URL,
-						echo wp_kses_post( sprintf( __( 'This plugin is hosted on <a href="%s" target="_blank">github</a>. Any pull requests are welcomed!', 'hamazon' ), 'https://github.com/fumikito/wp-hamazon' ) );
+						echo wp_kses_post( sprintf( __( 'This plugin is hosted on <a href="%s" target="_blank">github</a>. Any pull requests are welcomed!', 'wp-hamazon' ), 'https://github.com/fumikito/wp-hamazon' ) );
 						?>
 					</li>
 					<li>
 						<?php
 						// translators: %s is a URL,
-						echo wp_kses_post( sprintf( __( '<a href="%s" target="_blank">Gisnism.info</a> has lots of tips. Please touch it and join us.', 'hamazon' ), 'https://gianism.info' ) );
+						echo wp_kses_post( sprintf( __( '<a href="%s" target="_blank">Gisnism.info</a> has lots of tips. Please touch it and join us.', 'wp-hamazon' ), 'https://gianism.info' ) );
 						?>
 					</li>
 					<li>
 						<?php
 						// translators: %s is a URL,
-						echo wp_kses_post( sprintf( __( 'Please review our plugin at <a href="%s" target="_blank">WordPress.org</a>. Feedback will grow us.', 'hamazon' ), 'https://wordpress.org/support/plugin/wp-hamazon/reviews/#new-post' ) );
+						echo wp_kses_post( sprintf( __( 'Please review our plugin at <a href="%s" target="_blank">WordPress.org</a>. Feedback will grow us.', 'wp-hamazon' ), 'https://wordpress.org/support/plugin/wp-hamazon/reviews/#new-post' ) );
 						?>
 					</li>
 				</ul>
@@ -58,7 +58,7 @@
 				<hr />
 
 				<h3 class="hamazon-sidebar-title">
-					<?php esc_html_e( 'Social Links', 'hamazon' ); ?>
+					<?php esc_html_e( 'Social Links', 'wp-hamazon' ); ?>
 				</h3>
 
 				<div class="fb-page" data-href="https://www.facebook.com/gianism.info" data-small-header="true"
@@ -84,7 +84,7 @@
 				</p>
 
 				<p class="hamazon-sidebar-desc description">
-					<?php esc_html_e( 'Please visit our social media to make us more powerful!', 'hamazon' ); ?>
+					<?php esc_html_e( 'Please visit our social media to make us more powerful!', 'wp-hamazon' ); ?>
 				</p>
 
 			</div>

@@ -25,9 +25,9 @@ const types = HamazonBlock.shortCodes;
 
 registerBlockType( 'hamazon/single', {
 
-	title: __( 'Affiliate', 'hamazon' ),
+	title: __( 'Affiliate', 'wp-hamazon' ),
 
-	description: __( 'Insert affiliate block of WP-Hamazon.', 'hamazon' ),
+	description: __( 'Insert affiliate block of WP-Hamazon.', 'wp-hamazon' ),
 
 	keywords: [ 'affiliate', 'amazon' ],
 
@@ -61,7 +61,7 @@ registerBlockType( 'hamazon/single', {
 			return (
 				<div>
 					<button className="hamazon-block-trigger"
-						onClick={ () => setState( { isOpen: true } ) }>{ __( 'Set Link', 'hamazon' ) }</button>
+						onClick={ () => setState( { isOpen: true } ) }>{ __( 'Set Link', 'wp-hamazon' ) }</button>
 					{ isOpen ? (
 						<Modal className={ 'hamazon-block-modal' }
 							title={ title }
@@ -95,7 +95,7 @@ registerBlockType( 'hamazon/single', {
 							</div>
 
 							<Button isDefault onClick={ () => setState( { isOpen: false } ) }>
-								{ __( 'Close', 'hamazon' ) }
+								{ __( 'Close', 'wp-hamazon' ) }
 							</Button>
 						</Modal>
 					) : null }
@@ -109,7 +109,7 @@ registerBlockType( 'hamazon/single', {
 
 		// Build service options for SelectControl
 		const serviceOptions = [
-			{ value: '', label: __( 'Select service', 'hamazon' ) },
+			{ value: '', label: __( 'Select service', 'wp-hamazon' ) },
 			...services.map( ( service ) => ( {
 				value: service.key,
 				label: service.label,
@@ -119,18 +119,18 @@ registerBlockType( 'hamazon/single', {
 		return (
 			<div className="hamazon-block">
 				<InspectorControls>
-					<PanelBody title={ __( 'Direct Input', 'hamazon' ) } initialOpen={ true }>
+					<PanelBody title={ __( 'Direct Input', 'wp-hamazon' ) } initialOpen={ true }>
 						<p className="components-base-control__help">
-							{ __( 'Enter ASIN or product ID directly without searching.', 'hamazon' ) }
+							{ __( 'Enter ASIN or product ID directly without searching.', 'wp-hamazon' ) }
 						</p>
 						<SelectControl
-							label={ __( 'Service', 'hamazon' ) }
+							label={ __( 'Service', 'wp-hamazon' ) }
 							value={ attributes.type || '' }
 							options={ serviceOptions }
 							onChange={ ( value ) => setAttributes( { type: value } ) }
 						/>
 						<TextControl
-							label={ __( 'Product ID (ASIN)', 'hamazon' ) }
+							label={ __( 'Product ID (ASIN)', 'wp-hamazon' ) }
 							value={ attributes.id || '' }
 							onChange={ ( value ) => setAttributes( { id: value } ) }
 							placeholder="B00XXXXXX"
@@ -148,7 +148,7 @@ registerBlockType( 'hamazon/single', {
 				</div>
 				<div className="hamazon-block-rich-text">
 					<RichText tagName="p" onChange={ onChangeContent } value={ attributes.content }
-						placeholder={ __( 'Enter additional text(e.g. your opinion) here.', 'hamazon' ) } />
+						placeholder={ __( 'Enter additional text(e.g. your opinion) here.', 'wp-hamazon' ) } />
 				</div>
 			</div>
 		);

@@ -29,42 +29,42 @@ class AmazonConstants extends StaticPattern {
 		static $search_index = null;
 		if ( is_null( $search_index ) ) {
 			$search_index = array(
-				'All'                     => __( 'All', 'hamazon' ),
-				'AmazonVideo'             => __( 'Prime Video', 'hamazon' ),
-				'Apparel'                 => __( 'Apparel', 'hamazon' ),
-				'Appliances'              => __( 'Appliances', 'hamazon' ),
-				'Automotive'              => __( 'Car & Bike', 'hamazon' ),
-				'Baby'                    => __( 'Baby', 'hamazon' ),
-				'Beauty'                  => __( 'Beauty', 'hamazon' ),
-				'Books'                   => __( 'Books', 'hamazon' ),
-				'Classical'               => __( 'Classical', 'hamazon' ),
-				'CreditCards'             => __( 'CreditCards', 'hamazon' ),
-				'Computers'               => __( 'Computers', 'hamazon' ),
-				'DigitalMusic'            => __( 'Digital Music', 'hamazon' ),
-				'Electronics'             => __( 'Electronics', 'hamazon' ),
-				'Fashion'                 => __( 'Fashion', 'hamazon' ),
-				'ForeignBooks'            => __( 'Foreign Books', 'hamazon' ),
-				'GiftCards'               => __( 'Gift Cards', 'hamazon' ),
-				'GroceryAndGourmetFood'   => __( 'Food & Beverage', 'hamazon' ),
-				'HealthPersonalCare'      => __( 'Health Personal Care', 'hamazon' ),
-				'Hobbies'                 => __( 'Hobbies', 'hamazon' ),
-				'HomeAndKitchen'          => __( 'Home & Kitchen', 'hamazon' ),
-				'Industrial'              => __( 'Industrial', 'hamazon' ),
-				'Jewelry'                 => __( 'Jewelry', 'hamazon' ),
-				'KindleStore'             => __( 'Kindle Store', 'hamazon' ),
-				'MobileApps'              => __( 'Mobile Apps', 'hamazon' ),
-				'MoviesAndTV'             => __( 'Movies & TV', 'hamazon' ),
-				'Music'                   => __( 'Music', 'hamazon' ),
-				'MusicalInstruments'      => __( 'Musical Instruments', 'hamazon' ),
-				'OfficeProducts'          => __( 'Office Products', 'hamazon' ),
-				'PetSupplies'             => __( 'Pet Supplies', 'hamazon' ),
-				'Shoes'                   => __( 'Shoes & Bags', 'hamazon' ),
-				'Software'                => __( 'Software', 'hamazon' ),
-				'SportsAndOutoors'        => __( 'Sports & Outdoors', 'hamazon' ),
-				'ToolsAndHomeImprovement' => __( 'DIY & Gardening', 'hamazon' ),
-				'Toys'                    => __( 'Toys', 'hamazon' ),
-				'VideoGames'              => __( 'Video Games', 'hamazon' ),
-				'Watches'                 => __( 'Watches', 'hamazon' ),
+				'All'                     => __( 'All', 'wp-hamazon' ),
+				'AmazonVideo'             => __( 'Prime Video', 'wp-hamazon' ),
+				'Apparel'                 => __( 'Apparel', 'wp-hamazon' ),
+				'Appliances'              => __( 'Appliances', 'wp-hamazon' ),
+				'Automotive'              => __( 'Car & Bike', 'wp-hamazon' ),
+				'Baby'                    => __( 'Baby', 'wp-hamazon' ),
+				'Beauty'                  => __( 'Beauty', 'wp-hamazon' ),
+				'Books'                   => __( 'Books', 'wp-hamazon' ),
+				'Classical'               => __( 'Classical', 'wp-hamazon' ),
+				'CreditCards'             => __( 'CreditCards', 'wp-hamazon' ),
+				'Computers'               => __( 'Computers', 'wp-hamazon' ),
+				'DigitalMusic'            => __( 'Digital Music', 'wp-hamazon' ),
+				'Electronics'             => __( 'Electronics', 'wp-hamazon' ),
+				'Fashion'                 => __( 'Fashion', 'wp-hamazon' ),
+				'ForeignBooks'            => __( 'Foreign Books', 'wp-hamazon' ),
+				'GiftCards'               => __( 'Gift Cards', 'wp-hamazon' ),
+				'GroceryAndGourmetFood'   => __( 'Food & Beverage', 'wp-hamazon' ),
+				'HealthPersonalCare'      => __( 'Health Personal Care', 'wp-hamazon' ),
+				'Hobbies'                 => __( 'Hobbies', 'wp-hamazon' ),
+				'HomeAndKitchen'          => __( 'Home & Kitchen', 'wp-hamazon' ),
+				'Industrial'              => __( 'Industrial', 'wp-hamazon' ),
+				'Jewelry'                 => __( 'Jewelry', 'wp-hamazon' ),
+				'KindleStore'             => __( 'Kindle Store', 'wp-hamazon' ),
+				'MobileApps'              => __( 'Mobile Apps', 'wp-hamazon' ),
+				'MoviesAndTV'             => __( 'Movies & TV', 'wp-hamazon' ),
+				'Music'                   => __( 'Music', 'wp-hamazon' ),
+				'MusicalInstruments'      => __( 'Musical Instruments', 'wp-hamazon' ),
+				'OfficeProducts'          => __( 'Office Products', 'wp-hamazon' ),
+				'PetSupplies'             => __( 'Pet Supplies', 'wp-hamazon' ),
+				'Shoes'                   => __( 'Shoes & Bags', 'wp-hamazon' ),
+				'Software'                => __( 'Software', 'wp-hamazon' ),
+				'SportsAndOutoors'        => __( 'Sports & Outdoors', 'wp-hamazon' ),
+				'ToolsAndHomeImprovement' => __( 'DIY & Gardening', 'wp-hamazon' ),
+				'Toys'                    => __( 'Toys', 'wp-hamazon' ),
+				'VideoGames'              => __( 'Video Games', 'wp-hamazon' ),
+				'Watches'                 => __( 'Watches', 'wp-hamazon' ),
 			);
 		}
 
@@ -286,7 +286,7 @@ class AmazonConstants extends StaticPattern {
 					return self::convert_item( $item );
 				}
 			}
-			throw new \Exception( __( 'Sorry, but item not found.', 'hamazon' ) );
+			throw new \Exception( __( 'Sorry, but item not found.', 'wp-hamazon' ) );
 		} catch ( \Exception $exception ) {
 			return $fallback ? self::get_fallback_item( $asin ) : new \WP_Error( 'api_request', sprintf( '[%s] %s', $exception->getCode(), $exception->getMessage() ) );
 		}
@@ -323,7 +323,7 @@ class AmazonConstants extends StaticPattern {
 				$content = $asin;
 				$asin    = $extra_atts['asin'];
 			} else {
-				throw new \Exception( __( 'ASIN format is wrong.', 'hamazon' ), 400 );
+				throw new \Exception( __( 'ASIN format is wrong.', 'wp-hamazon' ), 400 );
 			}
 
 			$cache_key   = 'amazon_creators_' . $asin;
@@ -543,7 +543,7 @@ class AmazonConstants extends StaticPattern {
 		$locale            = $service->get_option( 'locale' );
 
 		if ( ! ( $credential_id && $credential_secret && $tag && $locale ) ) {
-			return new \WP_Error( 'hamazon_invalid_arguments', __( 'Amazon Associate setting is invalid. Please fill all information.', 'hamazon' ) );
+			return new \WP_Error( 'hamazon_invalid_arguments', __( 'Amazon Associate setting is invalid. Please fill all information.', 'wp-hamazon' ) );
 		}
 
 		$config = new Configuration();
@@ -588,7 +588,7 @@ class AmazonConstants extends StaticPattern {
 		$invalid_properties = $request->listInvalidProperties();
 		$length             = count( $invalid_properties );
 		if ( $length > 0 ) {
-			return new \WP_Error( 'invalid_property', __( 'Invalid properties for request.', 'hamazon' ) );
+			return new \WP_Error( 'invalid_property', __( 'Invalid properties for request.', 'wp-hamazon' ) );
 		}
 		return true;
 	}
