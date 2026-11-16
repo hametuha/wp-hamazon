@@ -12,6 +12,10 @@ updates:
       default-days: 7
     allow:
       - dependency-type: "direct"   # 推移的依存の単体PRを止める（脆弱性は下の security グループで拾う）
+    ignore:
+      # 1.0.0-beta-3（next タグ）を使っているが、Dependabot は prerelease の順序を誤り、
+      # 1.0.0-beta へのダウングレードを patch 更新として出す（#80 で自動マージされた）
+      - dependency-name: "po2json"
     groups:
       # 通常のバージョン更新は minor/patch を1本にまとめる（major は破壊的変更を切り分けるため個別PRで届く）
       npm-dependencies:
