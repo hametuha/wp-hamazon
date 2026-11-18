@@ -42,4 +42,22 @@ class Hamazon_Basic_Test extends WP_UnitTestCase {
 		$this->assertEquals( '<p>Test</p>', trim( $template_result ) );
 	}
 
+	/**
+	 * Old shortcode format [tmkm-amazon]ASIN[/tmkm-amazon] has no description attribute.
+	 */
+	function test_old_format_without_description() {
+		// shortcode_atts() only keeps registered attributes, so "description" never exists.
+		$result = \Hametuha\WpHamazon\Constants\AmazonConstants::format_amazon( '11111111111', array( 'asin' => '' ) );
+		$this->assertIsString( $result );
+		$this->assertStringContainsString( 'wp-hamazon-amazon-fallback', $result );
+	}
+
+	/**
+	 * Attributes may be missing when called directly.
+	 */
+	function test_format_without_attributes() {
+		$result = \Hametuha\WpHamazon\Constants\AmazonConstants::format_amazon( 'not an asin' );
+		$this->assertWPError( $result );
+		$this->assertStringContainsString( 'ASIN format is wrong.', $result->get_error_message() );
+	}
 }

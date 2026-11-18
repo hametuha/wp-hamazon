@@ -317,8 +317,8 @@ class AmazonConstants extends StaticPattern {
 		try {
 			if ( self::is_asin( $asin ) ) {
 				// Old format like [tmkm-amazon]000000000[/tmkm-amazon]
-				$content = $extra_atts['description'];
-			} elseif ( self::is_asin( $extra_atts['asin'] ) ) {
+				$content = $extra_atts['description'] ?? '';
+			} elseif ( self::is_asin( $extra_atts['asin'] ?? '' ) ) {
 				// New format
 				$content = $asin;
 				$asin    = $extra_atts['asin'];
