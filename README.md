@@ -52,6 +52,11 @@ Please do not post it publicly. Report security bugs through the [Patchstack Vul
 
 ##  Changelog
 
+### 6.0.3
+
+* Translations are now loaded from WordPress.org language packs. The text domain is changed to `wp-hamazon`.
+* Bugfix: PHP warning "Undefined array key description" with the old `[tmkm-amazon]ASIN[/tmkm-amazon]` short code.
+
 ### 6.0.2
 
 * Remove development files (including the `.git` directory) from the distributed package.
